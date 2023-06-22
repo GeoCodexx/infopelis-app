@@ -1,8 +1,17 @@
-/* .active{
-    font-weight: 700;
-    font-size: 1.5rem;
-} */
+.slider {
+    width: 100%;
+    height: 3px;
+    background-color: rgb(172, 172, 172);
+    margin-top: 10px;
+}
 
-.overlay-body{
-    opacity: .5;
+.slider .thumb {
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+    background: #a7a7a7;
+    color: #BEBEBE;
+    border-radius: 50%;
+    border: none;
+    top: -10px;
 }
