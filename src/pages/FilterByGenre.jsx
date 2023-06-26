@@ -1,20 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
-import { getPopularMovies } from "../services/Api";
+import { getPremiereMovies } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Popular = () => {
-  /*const {
-    isLoading,
-    data: popularMovie,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["populars"],
-    queryFn: getPopularMovies,
-  });*/
-  const fetchMovies = ({ pageParam = 1 }) => getPopularMovies(pageParam);
+const FilterByGenre = () => {
+  const fetchMovies = ({ pageParam = 1 }) => getPremiereMovies(pageParam);
 
   const {
     data,
@@ -24,18 +14,19 @@ const Popular = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery(["projects"], fetchMovies, {
+  } = useInfiniteQuery(["moviesByGenre"], fetchMovies, {
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.page === lastPage.total_pages) return false;
       return lastPage.page + 1;
     },
   });
-  //console.log(data);
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
-  //const movies = data?.pages.reduce(() => { second })
-  // if (isLoading) return <div>Loading...</div>;
-  // else if (isError) return <div>Error: {error.message}</div>;
-  //console.log(popularMovie.results);
+  const filtered = movies.filter((p) => {
+    [28, 12, 16, 35].forEach((element) => {
+      p.genre_ids.includes(element);
+    });
+  });
+  console.log(filtered);
   return status === "loading" ? (
     <p>Loading...</p>
   ) : status === "error" ? (
@@ -56,9 +47,8 @@ const Popular = () => {
           ))}
         </div>
       </InfiniteScroll>
-      Popularity
     </div>
   );
 };
 
-export default Popular;
+export default FilterByGenre;

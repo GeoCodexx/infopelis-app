@@ -1,20 +1,14 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
-import { getPopularMovies } from "../services/Api";
+import { getSearchedMovies } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useParams } from "react-router-dom";
 
-const Popular = () => {
-  /*const {
-    isLoading,
-    data: popularMovie,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["populars"],
-    queryFn: getPopularMovies,
-  });*/
-  const fetchMovies = ({ pageParam = 1 }) => getPopularMovies(pageParam);
+const Search = () => {
+  const { word } = useParams();
+
+  const fetchMovies = ({ pageParam = 1 }) =>
+    getSearchedMovies(pageParam, word);
 
   const {
     data,
@@ -24,18 +18,13 @@ const Popular = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery(["projects"], fetchMovies, {
+  } = useInfiniteQuery(["searchedmovies"], fetchMovies, {
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.page === lastPage.total_pages) return false;
       return lastPage.page + 1;
     },
   });
-  //console.log(data);
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
-  //const movies = data?.pages.reduce(() => { second })
-  // if (isLoading) return <div>Loading...</div>;
-  // else if (isError) return <div>Error: {error.message}</div>;
-  //console.log(popularMovie.results);
   return status === "loading" ? (
     <p>Loading...</p>
   ) : status === "error" ? (
@@ -56,9 +45,8 @@ const Popular = () => {
           ))}
         </div>
       </InfiniteScroll>
-      Popularity
     </div>
   );
 };
 
-export default Popular;
+export default Search;

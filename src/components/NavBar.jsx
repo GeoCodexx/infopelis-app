@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { RiMovie2Line } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -8,28 +8,37 @@ import { GrStarOutline } from "react-icons/gr";
 import { MdMovieFilter } from "react-icons/md";
 
 const NavBar = () => {
+  const navegacion = useNavigate();
   const [searchBtn, setSearchBtn] = useState("hidden");
   const [menuMobil, setMenuMobil] = useState("hidden");
+  const [searchString, setSearchString] = useState("");
+
+  const handleChange = (e) => {
+    //setTimeout(() => {
+    navegacion(`/search/${e.target.value}`);
+    //}, 800);
+  };
 
   return (
     <>
       <nav className="navbar px-6 py-2 shadow-lg relative">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between sm:justify-center items-center">
           <button
             onClick={() =>
               setMenuMobil((state) => (state === "hidden" ? "" : "hidden"))
             }
+            className="text-xl px-2 sm:hidden"
           >
-            <GiHamburgerMenu className="text-2xl sm:hidden" />
+            <GiHamburgerMenu />
           </button>
 
-          <div className="logo sm:w-1/4">
-            <Link to="/" className="flex align-middle">
+          <div className="logo">
+            <Link to="/" className="flex justify-center">
               <RiMovie2Line className="text-red-600 text-4xl" />
               <span className="text-3xl font-bold">InfoPelis</span>
             </Link>
           </div>
-          <div className="nav-links sm:w-2/4 hidden sm:flex sm:justify-evenly">
+          <div className="nav-links sm:w-2/4 hidden sm:flex sm:justify-evenly px-10">
             <NavLink
               to="/"
               className={({ isActive, isPending }) =>
@@ -41,7 +50,7 @@ const NavBar = () => {
             <NavLink to="/premieres">Estrenos</NavLink>
             <NavLink to="/populars">Populares</NavLink>
           </div>
-          <div className="search-engine sm:w-1/4 bg-zinc-100 items-center p-2 rounded-2xl hidden sm:flex">
+          <div className="search-engine bg-zinc-100 items-center p-2 rounded-2xl hidden sm:flex">
             <span className="mr-2">
               <FaSearch />
             </span>
@@ -51,11 +60,12 @@ const NavBar = () => {
               placeholder="Buscar película..."
               autoCorrect="off"
               autoComplete="off"
+              onChange={handleChange}
             />
           </div>
-          <div className="btn-search-movil">
+          <div className="btn-search-movil px-2">
             <button
-              className="text-2xl sm:hidden"
+              className="text-xl sm:hidden"
               onClick={() =>
                 setSearchBtn((state) =>
                   state === "hidden" ? "flex" : "hidden"
