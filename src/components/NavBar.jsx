@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineHome } from "react-icons/ai";
 import { GrStarOutline } from "react-icons/gr";
 import { MdMovieFilter } from "react-icons/md";
+import { useEffect } from "react";
 
 const NavBar = () => {
   const navegacion = useNavigate();
@@ -13,11 +14,35 @@ const NavBar = () => {
   const [menuMobil, setMenuMobil] = useState("hidden");
   const [searchString, setSearchString] = useState("");
 
+  useEffect(() => {
+    // Función de búsqueda que se ejecuta después del debounce
+    const search = () => {
+      //realizar la lógica de búsqueda o llamar a una función de búsqueda
+      console.log('Realizando búsqueda:', searchString);
+      navegacion(`/search/${searchString}`);
+    };
+
+    // Aplicar el efecto de debounce utilizando setTimeout
+    const delayDebounceFn = setTimeout(() => {
+      if (searchString) {
+        search();
+      }
+    }, 2800);
+
+    // Limpieza: cancelar el timeout si el componente se desmonta o el término de búsqueda cambia
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchString]);
+
+  const handleInputChange = (event) => {
+    setSearchString(event.target.value);
+  };
+
+/*
   const handleChange = (e) => {
     setTimeout(() => {
       navegacion(`/search/${e.target.value}`);
-    }, 3500);
-  };
+    }, 3200);
+  };*/
 
   return (
     <>
@@ -60,7 +85,7 @@ const NavBar = () => {
               placeholder="Buscar película..."
               autoCorrect="off"
               autoComplete="off"
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
           </div>
           <div className="btn-search-movil px-2">
@@ -89,7 +114,7 @@ const NavBar = () => {
             placeholder="Buscar película..."
             autoCorrect="off"
             autoComplete="off"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </div>
 

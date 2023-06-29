@@ -17,8 +17,8 @@ const Premiere = () => {
     status,
   } = useInfiniteQuery(["projects"], fetchMovies, {
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.page === lastPage.total_pages) return false;
-      return lastPage.page + 1;
+      const nextPage = lastPage.page + 1;
+      return nextPage < lastPage.total_pages ? nextPage : undefined;
     },
   });
   //console.log(data);
