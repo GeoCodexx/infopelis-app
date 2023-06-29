@@ -14,9 +14,9 @@ const NavBar = () => {
   const [searchString, setSearchString] = useState("");
 
   const handleChange = (e) => {
-    //setTimeout(() => {
-    navegacion(`/search/${e.target.value}`);
-    //}, 800);
+    setTimeout(() => {
+      navegacion(`/search/${e.target.value}`);
+    }, 3500);
   };
 
   return (
@@ -89,6 +89,7 @@ const NavBar = () => {
             placeholder="Buscar película..."
             autoCorrect="off"
             autoComplete="off"
+            onChange={handleChange}
           />
         </div>
 
