@@ -9,6 +9,8 @@ import { MdMovieFilter } from "react-icons/md";
 import { useEffect } from "react";
 
 const NavBar = () => {
+
+  const history = useHistory();
   const navegacion = useNavigate();
   const [searchBtn, setSearchBtn] = useState("hidden");
   const [menuMobil, setMenuMobil] = useState("hidden");
@@ -18,7 +20,7 @@ const NavBar = () => {
     // Función de búsqueda que se ejecuta después del debounce
     const search = () => {
       //realizar la lógica de búsqueda o llamar a una función de búsqueda
-      console.log('Realizando búsqueda:', searchString);
+      //console.log('Realizando búsqueda:', searchString);
       navegacion(`/search/${searchString}`);
     };
 
@@ -27,7 +29,7 @@ const NavBar = () => {
       if (searchString) {
         search();
       }
-    }, 2800);
+    }, 1500);
 
     // Limpieza: cancelar el timeout si el componente se desmonta o el término de búsqueda cambia
     return () => clearTimeout(delayDebounceFn);
@@ -63,20 +65,24 @@ const NavBar = () => {
               <span className="text-3xl font-bold">InfoPelis</span>
             </Link>
           </div>
-          <div className="nav-links sm:w-2/4 hidden sm:flex sm:justify-evenly px-10">
+          <div className="nav-links sm:w-2/4 hidden sm:flex sm:justify-evenly px-10  text-lg">
             <NavLink
               to="/"
               className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "active" : ""
+                isPending ? "pending" : isActive ? "active sm:mr-2 font-semibold" : "sm:mr-2"
               }
             >
               Inicio
             </NavLink>
-            <NavLink to="/premieres">Estrenos</NavLink>
-            <NavLink to="/populars">Populares</NavLink>
+            <NavLink to="/premieres" className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active sm:mr-2 font-semibold" : "sm:mr-2"
+              }>Estrenos</NavLink>
+            <NavLink to="/populars" className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active mr-2 font-semibold" : ""
+              }>Populares</NavLink>
           </div>
-          <div className="search-engine bg-zinc-100 items-center p-2 rounded-2xl hidden sm:flex">
-            <span className="mr-2">
+          <div className="search-engine bg-zinc-100 items-center p-2 rounded-2xl hidden sm:flex lg:w-1/4">
+            <span className="mr-3">
               <FaSearch />
             </span>
             <input

@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Popular from "../pages/Popular";
 import Premiere from "../pages/Premiere";
@@ -7,6 +6,7 @@ import Detail from "../pages/Detail";
 import Search from "../pages/Search";
 import FilterByGenre from "../pages/FilterByGenre";
 import FilterByYear from "../pages/FilterByYear";
+import FilterByRating from "../pages/FilterByRating";
 
 const Router = () => {
   return (
@@ -19,6 +19,7 @@ const Router = () => {
       <Route path="/search/:word" element={<Search />} />
       <Route path="/filterbygenres" element={<FilterByGenre />} />
       <Route path="/filterbyyear" element={<FilterByYear />} />
+      <Route path="/filterbyrating" element={<FilterByRating />} />
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   );

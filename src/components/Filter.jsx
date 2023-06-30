@@ -1,31 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { getGenres } from "../services/Api";
 import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import ReactSlider from "react-slider";
 import { Rating } from "@smastrom/react-rating";
 import { useContext } from "react";
 import Contexto from "../context/Context";
 import { useNavigate } from "react-router-dom";
-
-/*const getRating = (rating) => {
-  switch (rating) {
-    case 1:
-      return "Poor";
-    case 2:
-      return "Nothing special";
-    case 3:
-      return "Average";
-    case 4:
-      return "Very good";
-    case 5:
-      return "Excellent";
-    default:
-      return "None";
-  }
-};*/
 
 const Filter = () => {
   const currentDate = new Date();
@@ -41,26 +23,24 @@ const Filter = () => {
   ];
 
   const naveg = useNavigate();
+  
   const { setGenres } = useContext(Contexto);
   const { setRangeAnio } = useContext(Contexto);
+  const { setRangeRating } = useContext(Contexto);
 
-  //const [itemsSelected, setItemsSelected] = useState([]);
-  //const [valueSlider, setValueSlider] = useState([1900, 2023]);
   const [startYear, setStartYear] = useState(currentYear - 1);
   const [endYear, setEndYear] = useState(currentYear);
-
   const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
 
   const { isLoading, data, isError, error } = useQuery({
     queryKey: ["genres"],
     queryFn: getGenres,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  else if (isError) return <div>Error: {error.message}</div>;
+  if (isLoading) console.log("Loading...");
+  else if (isError) console.error(error.message);
 
-  const optionsGenre = data.genres.map((elemento) => {
+  const optionsGenre = data?.genres.map((elemento) => {
     return { value: `${elemento.id}`, label: `${elemento.name}` };
   });
 
@@ -83,15 +63,39 @@ const Filter = () => {
     naveg("/filterbyyear");
   };
 
+  //FILTER BY RATING
+  useEffect(() => {
+    // Función de búsqueda que se ejecuta después del debounce
+    const filter = () => {
+      //realizar la lógica de búsqueda o llamar a una función de búsqueda
+      //console.log("Realizando búsqueda:", rating);
+      const newValueRating = rating * 2;
+      setRangeRating([
+        newValueRating - 2,
+        newValueRating === 10 ? newValueRating : newValueRating - 0.1,
+      ]);
+      naveg("/filterbyrating");
+    };
+
+    // Aplicar el efecto de debounce utilizando setTimeout
+    const delayDebounceFn = setTimeout(() => {
+      if (rating) {
+        filter();
+      }
+    }, 800);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [rating]);
+
   return (
-    <div className="container mx-auto px-1 sm:px-4 py-2 sm:flex items-center text-sm sm:text-base sm:justify-between shadow-md">
+    <div className="container mx-auto px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md">
       <div className="flex items-center text-base mb-2 sm:mb-0">
         <FaFilter className="mr-1" />
         <span>Filtros:</span>
       </div>
       <div className="w-full px-7 sm:px-3 py-1 items-center sm:flex sm:justify-evenly">
-        <div className="mb-4 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
-          <p className="font-semibold">Género</p>
+        <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
+          <p className="font-medium">Género</p>
           <div className="w-full">
             <Select
               closeMenuOnSelect={true}
@@ -113,20 +117,10 @@ const Filter = () => {
             />
           </div>
         </div>
-        <div className="mb-4 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
-          <p className="font-semibold">Año</p>
-          {/* <p className="flex justify-between w-4/5">
-            <span className="text-sm">1900</span>
-            <span className="text-sm">{currentYear}</span>
-          </p> */}
-          <div className="md:w-4/5 flex justify-center items-center">
-            {/* <ReactSlider
-              className="slider"
-              onChange={handleOnChangeSlider}
-              value={valueSlider}
-              min={1900}
-              max={currentYear}
-            /> */}
+
+        <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
+          <p className="font-medium">Año</p>
+          <div className="md:w-4/5 flex justify-start sm:justify-center items-center">
             <div className="flex">
               <input
                 className="bg-zinc-100 focus:outline-none  rounded-md text-center py-1 cursor-pointer"
@@ -154,7 +148,7 @@ const Filter = () => {
             </div>
             <div className="ml-2">
               <button
-                className="rounded shadow-md border border-gray-300 py-1 px-4"
+                className="rounded shadow-md border border-gray-300 py-1 px-4 md:px-2"
                 onClick={handleOnChangeYear}
               >
                 Filtrar
@@ -162,14 +156,14 @@ const Filter = () => {
             </div>
           </div>
         </div>
-        <div className="sm:w-48 sm:flex sm:flex-col items-center">
-          <p className="font-semibold">Rating</p>
+
+        <div className="sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
+          <p className="font-medium">Rating</p>
           <div style={{ maxWidth: 140, width: "100%" }}>
             <div className="w-full mt-2">
               <Rating
                 value={rating}
                 onChange={setRating}
-                onHoverChange={setHoveredRating}
               />
               {/* <div>
                 <div>{`Selected: ${getRating(rating)}`}</div>

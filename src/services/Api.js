@@ -65,4 +65,17 @@ export const getMoviesByYear = async (page, rangeAnio) => {
   });
   return res.data;
 };
+
+//BUSQUEDA POR RANGO DE AÑOS
+export const getMoviesByRating = async (page, rating) => {
+  const res = await instance.get("/discover/movie", {
+    params: {
+      page: page,
+      "vote_average.gte": rating[0],
+      "vote_average.lte": rating[1],
+      sort_by: 'popularity.desc'
+    },
+  });
+  return res.data;
+};
 //captured images Movies: https://api.themoviedb.org/3/movie/{movie_id}/images

@@ -5,9 +5,20 @@ import { useState } from "react";
 
 const ProviderFilter = ({ children }) => {
   const [genres, setGenres] = useState([]);
-  const [rangeAnio, setRangeAnio] = useState(0);
+  const [rangeAnio, setRangeAnio] = useState([]);
+  const [rangeRating, setRangeRating] = useState([]);
+  const resetInputs = () => {};
   return (
-    <Contexto.Provider value={{ genres, setGenres, rangeAnio, setRangeAnio }}>
+    <Contexto.Provider
+      value={{
+        genres,
+        setGenres,
+        rangeAnio,
+        setRangeAnio,
+        rangeRating,
+        setRangeRating,
+      }}
+    >
       {children}
     </Contexto.Provider>
   );
