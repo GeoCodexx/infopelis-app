@@ -1,14 +1,16 @@
+import { getMoviesByYear } from "../services/Api";
+import Contexto from "../context/Context";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getMoviesByGenre } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext } from "react";
-import Contexto from "../context/Context";
 import noResultImage from "../assets/images/no-results.png";
 
-const FilterByGenre = () => {
-  const { genres } = useContext(Contexto);
-  const fetchMovies = ({ pageParam = 1 }) => getMoviesByGenre(pageParam, genres);
+const FilterByYear = () => {
+  const { rangeAnio } = useContext(Contexto);
+
+  const fetchMovies = ({ pageParam = 1 }) =>
+    getMoviesByYear(pageParam, rangeAnio);
 
   //Esto asegura que la consulta se refresque cuando "word" cambie. En este caso, se utilizó ["searchedmovies", word] como clave.
   const {
@@ -19,7 +21,7 @@ const FilterByGenre = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery(["moviesByGenre", genres], fetchMovies, {
+  } = useInfiniteQuery(["moviesByYear",rangeAnio], fetchMovies, {
     getNextPageParam: (lastPage, pages) => {
       const nextPage = lastPage.page + 1;
       return nextPage < lastPage.total_pages ? nextPage : undefined;
@@ -29,8 +31,8 @@ const FilterByGenre = () => {
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
 
   /*useEffect(() => {
-    fetchNextPage(1); // Fetch the first page when "word" changes
-  }, [word]);*/
+      fetchNextPage(1); // Fetch the first page when "word" changes
+    }, [word]);*/
 
   return status === "loading" ? (
     <p>Loading...</p>
@@ -71,4 +73,4 @@ const FilterByGenre = () => {
   );
 };
 
-export default FilterByGenre;
+export default FilterByYear;

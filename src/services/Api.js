@@ -4,10 +4,9 @@ const instance = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
     Accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGU4YWY4MTM0MTlhMGJmMzU1ODllOWU0NWY3MDU3MCIsInN1YiI6IjY0Mzg2NzBhMWQ1Mzg2MDExMzViOWNmNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gAmf4YTGDQQEQAtVpq-sydlrYkKQwjahksyiu4hDgSU",
   },
   params: {
+    api_key: "38e8af813419a0bf35589e9e45f70570",
     language: "es",
     include_adult: false,
   },
@@ -21,7 +20,7 @@ export const getGenres = async () => {
 
 //HOME
 export const getUpcomingMovies = async (page) => {
-  const res = await instance.get("/movie/upcoming", { params: { page: page } });
+  const res = await instance.get("/discover/movie", { params: { page: page } });
   return res.data;
 };
 
@@ -49,12 +48,21 @@ export const getSearchedMovies = async (page, query) => {
 
 //BUSQUEDA POR GENERO
 export const getMoviesByGenre = async (page, genres) => {
-  const res = await instance.get("/search/movie", { params: { page: page } });
-  const filtered = res.data.results.filter((p) => {
-    genres.forEach((element) => {
-      return p.genre.ids.inclues(element) && p;
-    });
+  const res = await instance.get("/discover/movie", {
+    params: { page: page, with_genres: genres },
   });
-  return filtered;
+  return res.data;
+};
+
+//BUSQUEDA POR RANGO DE AÑOS
+export const getMoviesByYear = async (page, rangeAnio) => {
+  const res = await instance.get("/discover/movie", {
+    params: {
+      page: page,
+      "primary_release_date.gte": `${rangeAnio[0]}-01-01`,
+      "primary_release_date.lte": `${rangeAnio[1]}-12-31`,
+    },
+  });
+  return res.data;
 };
 //captured images Movies: https://api.themoviedb.org/3/movie/{movie_id}/images

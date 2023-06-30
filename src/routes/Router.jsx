@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import Detail from "../pages/Detail";
 import Search from "../pages/Search";
 import FilterByGenre from "../pages/FilterByGenre";
+import FilterByYear from "../pages/FilterByYear";
 
 const Router = () => {
   return (
@@ -16,6 +17,8 @@ const Router = () => {
       <Route path="/movies/bygenre" element={<FilterByGenre />} />
       <Route path="/detail/:id" element={<Detail />} />
       <Route path="/search/:word" element={<Search />} />
+      <Route path="/filterbygenres" element={<FilterByGenre />} />
+      <Route path="/filterbyyear" element={<FilterByYear />} />
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   );
