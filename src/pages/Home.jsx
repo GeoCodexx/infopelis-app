@@ -1,8 +1,8 @@
-import { getUpcomingMovies } from '../services/Api';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import Spinner from '../components/Spinner';
-import MovieCard from '../components/MovieCard';
+import { getUpcomingMovies } from "../services/Api";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "../components/Spinner";
+import MovieCard from "../components/MovieCard";
 
 const Home = () => {
   const fetchMovies = ({ pageParam = 1 }) => getUpcomingMovies(pageParam);
@@ -24,7 +24,9 @@ const Home = () => {
   //console.log(data);
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
   return status === "loading" ? (
-    <p>Loading...</p>
+    <div className="text-center">
+      <Spinner />
+    </div>
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
@@ -35,9 +37,13 @@ const Home = () => {
           fetchNextPage();
         }}
         hasMore={hasNextPage}
-        loader={<h4>Loading...</h4>}
+        loader={
+          <div style={{ textAlign: "center" }}>
+            <Spinner />
+          </div>
+        }
       >
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
@@ -45,6 +51,6 @@ const Home = () => {
       </InfiniteScroll>
     </div>
   );
-}
+};
 
-export default Home
+export default Home;

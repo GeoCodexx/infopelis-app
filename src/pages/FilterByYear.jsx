@@ -5,6 +5,7 @@ import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext } from "react";
 import noResultImage from "../assets/images/no-results.png";
+import Spinner from "../components/Spinner";
 
 const FilterByYear = () => {
   const { rangeAnio } = useContext(Contexto);
@@ -35,7 +36,9 @@ const FilterByYear = () => {
     }, [word]);*/
 
   return status === "loading" ? (
-    <p>Loading...</p>
+    <div className="text-center">
+      <Spinner />
+    </div>
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
@@ -47,9 +50,11 @@ const FilterByYear = () => {
             fetchNextPage();
           }}
           hasMore={hasNextPage}
-          loader={<h4>Loading...</h4>}
+          loader={<div className="text-center">
+          <Spinner />
+        </div>}
         >
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
             {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}

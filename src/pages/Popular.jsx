@@ -3,6 +3,7 @@ import React from "react";
 import { getPopularMovies } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "../components/Spinner";
 
 const Popular = () => {
   /*const {
@@ -37,7 +38,9 @@ const Popular = () => {
   // else if (isError) return <div>Error: {error.message}</div>;
   //console.log(popularMovie.results);
   return status === "loading" ? (
-    <p>Loading...</p>
+    <div className="text-center">
+      <Spinner />
+    </div>
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
@@ -48,15 +51,18 @@ const Popular = () => {
           fetchNextPage();
         }}
         hasMore={hasNextPage}
-        loader={<h4>Loading...</h4>}
+        loader={
+          <div style={{ textAlign: "center" }}>
+            <Spinner />
+          </div>
+        }
       >
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
       </InfiniteScroll>
-      Popularity
     </div>
   );
 };

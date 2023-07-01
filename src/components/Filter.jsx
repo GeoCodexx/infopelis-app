@@ -8,6 +8,7 @@ import { Rating } from "@smastrom/react-rating";
 import { useContext } from "react";
 import Contexto from "../context/Context";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
 const Filter = () => {
   const currentDate = new Date();
@@ -23,7 +24,7 @@ const Filter = () => {
   ];
 
   const naveg = useNavigate();
-  
+
   const { setGenres } = useContext(Contexto);
   const { setRangeAnio } = useContext(Contexto);
   const { setRangeRating } = useContext(Contexto);
@@ -161,10 +162,7 @@ const Filter = () => {
           <p className="font-medium">Rating</p>
           <div style={{ maxWidth: 140, width: "100%" }}>
             <div className="w-full mt-2">
-              <Rating
-                value={rating}
-                onChange={setRating}
-              />
+              <Rating value={rating} onChange={setRating} />
               {/* <div>
                 <div>{`Selected: ${getRating(rating)}`}</div>
                 <div>{getRating(hoveredRating)}</div>

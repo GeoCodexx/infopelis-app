@@ -33,7 +33,7 @@ const Search = () => {
   }, [word]);*/
 
   return status === "loading" ? (
-    <p>Loading...</p>
+    <div>Loading...</div>
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
@@ -47,7 +47,7 @@ const Search = () => {
           hasMore={hasNextPage}
           loader={<h4>Loading...</h4>}
         >
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
             {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
