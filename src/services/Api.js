@@ -90,11 +90,17 @@ export const getMovieCredits = async (id) => {
   return res.data;
 };
 
-//BUSQUEDA POR GENERO
+//OBTENER PELICULAS RECOMENDADAS
 export const getRecomMovies = async (page, id) => {
   const res = await instance.get(`/movie/${id}/recommendations`, {
     params: { page: page },
   });
   return res.data;
 };
-//captured images Movies: https://api.themoviedb.org/3/movie/{movie_id}/images
+
+//OPTENER VIDEOS POR PELICULA
+//movie/455476/videos
+export const getMovieVideos = async (id) => {
+  const response = await instance.get(`/movie/${id}/videos`);
+  return response.data;
+};

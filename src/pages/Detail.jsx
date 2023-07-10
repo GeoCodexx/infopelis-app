@@ -2,10 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovie } from "../services/Api";
-import { FaCalendarDay } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import { convertRuntime } from "../helpers/RuntimeConveter";
 import RecomMovies from "./RecomMovies";
 import CastMovie from "./CastMovie";
+import OverlayTrailer from "../components/OverlayTrailer";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const Detail = () => {
   const { id } = useParams();
@@ -13,15 +16,18 @@ const Detail = () => {
   const urlPoster = "https://image.tmdb.org/t/p/w300";
   const backdrop = "https://image.tmdb.org/t/p/original";
 
-  //const [runtime, setRuntime] = useState({ h: 0, m: 0, s: 0 });
+  //const videoRef = useRef(null);
+  //OVERLAY STATE
+  const [showOverlay, setShowOverlay] = useState(false);
 
+  //MOVIE DETAIL
   const {
     isLoading,
     data: movie,
     isError,
     error,
   } = useQuery({
-    queryKey: ["movie",idMovie],
+    queryKey: ["movie", idMovie],
     queryFn: () => getMovie(idMovie),
   });
 
@@ -32,8 +38,31 @@ const Detail = () => {
     event.target.src = defaultImage;
   };
 
+  //HANDLER OVERLAY MOVIE TRAILER
+  const openOverlay = () => {
+    setShowOverlay(true);
+  };
+
+  const closeOverlay = () => {
+    setShowOverlay(false);
+  };
+  /*
+  const handleClickOutside = (event) => {
+    if (videoRef.current && !videoRef.current.contains(event.target)) {
+      closeOverlay();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);*/
+
   if (isLoading) return <div>Loading...</div>;
   else if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className="container mx-auto">
       {movie && (
@@ -53,6 +82,21 @@ const Detail = () => {
                 alt={movie.title}
                 onError={handleError}
               />
+              <div className="text-center mt-1">
+                <button
+                  className="bg-white/20 text-white px-3 py-1 rounded"
+                  onClick={openOverlay}
+                >
+                  <FaPlay className="inline-block text-sm" />
+                  <span className="align-middle"> Ver Trailer</span>
+                </button>
+
+                {showOverlay && (
+                  <div>
+                    <OverlayTrailer movieId={id} onClose={closeOverlay} />
+                  </div>
+                )}
+              </div>
             </div>
             <div className="description p-3 text-white/90 lg:col-span-2 h-full">
               <div className="details-movie">
@@ -100,7 +144,11 @@ const Detail = () => {
                     <h2 className="font-semibold text-center text-lg">
                       Descripción general
                     </h2>
-                    <p className="text-justify mt-4">{movie.overview ? movie.overview : 'Ups...! No se encontro descripción alguna para esta pelicula.'}</p>
+                    <p className="text-justify mt-4">
+                      {movie.overview
+                        ? movie.overview
+                        : "Ups...! No se encontro descripción alguna para esta pelicula."}
+                    </p>
                   </div>
                 </div>
               </div>

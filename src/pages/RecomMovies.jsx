@@ -22,14 +22,17 @@ const RecomMovies = ({ idMovie }) => {
   //console.log(listRecom.results);
   return (
     <>
-      {listRecom?.results &&
-        listRecom?.results.sort((a, b) => b.popularity - a.popularity).map((elem, i) => (
-          <MovieCard key={i} movie={elem}/>
-          
-        ))}
-        {/*<div key={i} className="m-auto">
-            <img src={`${urlPoster}${elem.poster_path}`} alt={elem.title} />
-        </div>*/}
+      {listRecom?.results>0 ? (
+        listRecom?.results
+          .sort((a, b) => b.popularity - a.popularity)
+          .map((elem, i) => <MovieCard key={i} movie={elem} />)
+      ) : (
+        <div>
+          <h1 className="font-semibold text-center col-span-2 text-red-400">
+            Ups...! No se encontraron películas recomendadas.
+          </h1>
+        </div>
+      )}
     </>
   );
 };

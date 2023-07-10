@@ -19,13 +19,13 @@ const CastMovie = ({ idmovie }) => {
 
   if (isLoading) console.log("Cargando Creditos");
   else if (isError) console.error(error.message);
-  console.log(items);
+  //console.log(items);
   return (
     <>
       {items?.cast &&
         items?.cast.map((c, i) => (
           <div
-            className="card my-1 mx-2 min-w-[138px] rounded-md text-center bg-white overflow-hidden shadow-md border border-gray-200"
+            className="card my-1 mx-2 min-w-[138px] max-w-[138px] rounded-md text-center bg-white overflow-hidden shadow-md border border-gray-200"
             key={i}
           >
             <img
