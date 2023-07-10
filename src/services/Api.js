@@ -92,7 +92,7 @@ export const getMovieCredits = async (id) => {
 
 //BUSQUEDA POR GENERO
 export const getRecomMovies = async (page, id) => {
-  const res = await instance.get(`/movie/${id}/similar`, {
+  const res = await instance.get(`/movie/${id}/recommendations`, {
     params: { page: page },
   });
   return res.data;

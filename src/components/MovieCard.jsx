@@ -11,6 +11,7 @@ const MovieCard = ({ movie }) => {
     <div className="group m-auto relative">
       <Link to={`/detail/${id}`}>
         <img
+        className="rounded-md"
           src={`${urlPoster}${poster_path}`}
           alt={title}
           onError={handleError}

@@ -5,6 +5,7 @@ import { getMovie } from "../services/Api";
 import { FaCalendarDay } from "react-icons/fa";
 import { convertRuntime } from "../helpers/RuntimeConveter";
 import RecomMovies from "./RecomMovies";
+import CastMovie from "./CastMovie";
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const Detail = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["movie"],
+    queryKey: ["movie",idMovie],
     queryFn: () => getMovie(idMovie),
   });
 
@@ -34,13 +35,13 @@ const Detail = () => {
   if (isLoading) return <div>Loading...</div>;
   else if (error) return <div>Error: {error.message}</div>;
   return (
-    <div className="container mx-auto bg-[#eee]">
+    <div className="container mx-auto">
       {movie && (
         <>
           <div
             className="grid gap-y-2 sm:gap-2 sm:grid-cols-2 p-4 md:grid-cols-2 lg:grid-cols-3 items-center"
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdrop}${movie.backdrop_path})` /*,backgroundPosition: "left calc((50vw - 170px) - 340px) top"*/,
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdrop}${movie.backdrop_path})`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
             }}
@@ -99,18 +100,27 @@ const Detail = () => {
                     <h2 className="font-semibold text-center text-lg">
                       Descripción general
                     </h2>
-                    <p className="text-justify mt-4">{movie.overview}</p>
+                    <p className="text-justify mt-4">{movie.overview ? movie.overview : 'Ups...! No se encontro descripción alguna para esta pelicula.'}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-4 mt-3">
-            <div className="col-span-3 bg-slate-500">Tercer DIV</div>
-            <div className="col-span-1 bg-pink-500">
-              <RecomMovies idMovie={id} />
+          <div className="container mt-3">
+            <div className="cast-scroller">
+              <h2 className="font-semibold text-lg">Reparto Principal</h2>
+              <div className="cast_scroller border-t-2 border-gray-300 flex overflow-x-scroll py-3">
+                <CastMovie idmovie={id} />
+              </div>
+            </div>
+            <div className="recom-movies mt-4">
+              <h2 className="font-semibold text-lg">Películas Recomendadas</h2>
+              <div className="border-t-2 border-gray-300 grid grid-cols-2 p-3 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-6 gap-1 py-5">
+                <RecomMovies idMovie={id} />
+              </div>
             </div>
           </div>
+          <div className="section-recom-movies"></div>
         </>
       )}
     </div>

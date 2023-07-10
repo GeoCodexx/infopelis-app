@@ -175,21 +175,6 @@ const Filter = () => {
             </div>
           </div>
         </div>
-        <div className="button-reset">
-          <button
-            className="p-2 rounded-md shadow bg-slate-500 hover:bg-slate-700 text-white  mt-3 sm:mt-0 sm:hidden md:hidden lg:inline-block"
-            title="Limpiar filtros de búsqueda"
-          >
-            <MdCleaningServices className="inline-block" />
-            <span className="align-middle"> Limpiar</span>
-          </button>
-          <button
-            className="p-2 sm:mt-5 md:mt-5 sm:ml-2 rounded-md shadow bg-slate-500 hover:bg-slate-700 text-white  mt-3 lg:hidden hidden sm:inline-block"
-            title="Limpiar filtros de búsqueda"
-          >
-            <MdCleaningServices className="inline-block" />
-          </button>
-        </div>
       </div>
     </div>
   );
