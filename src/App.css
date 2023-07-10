@@ -6,3 +6,7 @@
     font-weight: 500;
     /*margin-right: 1rem;*/
 }
+
+.overlay-image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/fondo.jpg");
+}

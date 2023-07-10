@@ -8,7 +8,8 @@ import { Rating } from "@smastrom/react-rating";
 import { useContext } from "react";
 import Contexto from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import Spinner from "./Spinner";
+import { MdCleaningServices } from "react-icons/md";
+import { useRef } from "react";
 
 const Filter = () => {
   const currentDate = new Date();
@@ -24,6 +25,7 @@ const Filter = () => {
   ];
 
   const naveg = useNavigate();
+  const selectInputRef = useRef();
 
   const { setGenres } = useContext(Contexto);
   const { setRangeAnio } = useContext(Contexto);
@@ -47,13 +49,14 @@ const Filter = () => {
 
   //FILTER BY GENRES;
   const handleOnChangeSelect = (data) => {
-    const genresMovies = data.map((elem) => elem.value);
+    const genresMovies = data && data.map((elem) => elem.value);
     //console.log(genresMovies.toString());
     if (data.length > 0) {
       setGenres(genresMovies.toString());
+      setStartYear(currentYear - 1);
+      setEndYear(currentYear);
+      setRating(0);
       naveg("/filterbygenres");
-    } else {
-      naveg("/");
     }
   };
 
@@ -61,6 +64,8 @@ const Filter = () => {
   const handleOnChangeYear = () => {
     //console.log(startYear, endYear);
     setRangeAnio([startYear.toString(), endYear.toString()]);
+    selectInputRef.current.clearValue();
+    setRating(0);
     naveg("/filterbyyear");
   };
 
@@ -75,15 +80,18 @@ const Filter = () => {
         newValueRating - 2,
         newValueRating === 10 ? newValueRating : newValueRating - 0.1,
       ]);
-      naveg("/filterbyrating");
     };
 
     // Aplicar el efecto de debounce utilizando setTimeout
     const delayDebounceFn = setTimeout(() => {
       if (rating) {
         filter();
+        setStartYear(currentYear - 1);
+        setEndYear(currentYear);
+        selectInputRef.current.clearValue();
+        naveg("/filterbyrating");
       }
-    }, 800);
+    }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [rating]);
@@ -99,6 +107,7 @@ const Filter = () => {
           <p className="font-medium">Género</p>
           <div className="w-full">
             <Select
+              ref={selectInputRef}
               closeMenuOnSelect={true}
               components={animatedComponents}
               options={optionsGenre ? optionsGenre : options}
@@ -124,7 +133,7 @@ const Filter = () => {
           <div className="md:w-4/5 flex justify-start sm:justify-center items-center">
             <div className="flex">
               <input
-                className="bg-zinc-100 focus:outline-none  rounded-md text-center py-1 cursor-pointer"
+                className="bg-zinc-100 focus:outline-none rounded-md text-center py-1 cursor-pointer border border-gray-300"
                 type="number"
                 min="1900"
                 max={currentYear}
@@ -137,7 +146,7 @@ const Filter = () => {
               <span className="text-semibold mx-1">-</span>
 
               <input
-                className="bg-zinc-100 focus:outline-none  rounded-md text-center py-1 cursor-pointer"
+                className="bg-zinc-100 focus:outline-none rounded-md text-center py-1 cursor-pointer border border-gray-300"
                 type="number"
                 min="1900"
                 max={currentYear}
@@ -147,12 +156,12 @@ const Filter = () => {
                 onFocus={(event) => event.target.select()}
               />
             </div>
-            <div className="ml-2">
+            <div className="ml-1">
               <button
-                className="rounded shadow-md border border-gray-300 py-1 px-4 md:px-2"
+                className="rounded-md shadow-md border border-gray-300 py-1 px-3 bg-slate-500 hover:bg-slate-600 text-white"
                 onClick={handleOnChangeYear}
               >
-                Filtrar
+                Ir
               </button>
             </div>
           </div>
@@ -163,15 +172,23 @@ const Filter = () => {
           <div style={{ maxWidth: 140, width: "100%" }}>
             <div className="w-full mt-2">
               <Rating value={rating} onChange={setRating} />
-              {/* <div>
-                <div>{`Selected: ${getRating(rating)}`}</div>
-                <div>{getRating(hoveredRating)}</div>
-              </div> */}
             </div>
-            {/* <button className="py-1 px-2 rounded-md shadow-md " type="button" onClick={() => setRating(0)}>
-              reset
-            </button> */}
           </div>
+        </div>
+        <div className="button-reset">
+          <button
+            className="p-2 rounded-md shadow bg-slate-500 hover:bg-slate-700 text-white  mt-3 sm:mt-0 sm:hidden md:hidden lg:inline-block"
+            title="Limpiar filtros de búsqueda"
+          >
+            <MdCleaningServices className="inline-block" />
+            <span className="align-middle"> Limpiar</span>
+          </button>
+          <button
+            className="p-2 sm:mt-5 md:mt-5 sm:ml-2 rounded-md shadow bg-slate-500 hover:bg-slate-700 text-white  mt-3 lg:hidden hidden sm:inline-block"
+            title="Limpiar filtros de búsqueda"
+          >
+            <MdCleaningServices className="inline-block" />
+          </button>
         </div>
       </div>
     </div>

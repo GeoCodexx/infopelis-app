@@ -73,8 +73,27 @@ export const getMoviesByRating = async (page, rating) => {
       page: page,
       "vote_average.gte": rating[0],
       "vote_average.lte": rating[1],
-      sort_by: 'popularity.desc'
+      sort_by: "popularity.desc",
     },
+  });
+  return res.data;
+};
+//OBTENER PELICULA DETALLES
+export const getMovie = async (id) => {
+  const res = await instance.get(`/movie/${id}`);
+  return res.data;
+};
+
+//OBTENER CREDITOS DE PELICULA
+export const getMovieCredits = async (id) => {
+  const res = await instance.get(`/movie/${id}/credits`);
+  return res.data;
+};
+
+//BUSQUEDA POR GENERO
+export const getRecomMovies = async (page, id) => {
+  const res = await instance.get(`/movie/${id}/similar`, {
+    params: { page: page },
   });
   return res.data;
 };
