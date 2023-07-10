@@ -5,7 +5,7 @@ import MovieCard from "../components/MovieCard";
 
 const RecomMovies = ({ idMovie }) => {
   //console.log(idMovie);
-  const urlPoster = "https://image.tmdb.org/t/p/w300";
+  //const urlPoster = "https://image.tmdb.org/t/p/w300";
 
   const {
     data: listRecom,
@@ -22,7 +22,7 @@ const RecomMovies = ({ idMovie }) => {
   //console.log(listRecom.results);
   return (
     <>
-      {listRecom?.results>0 ? (
+      {listRecom?.results.length>0 ? (
         listRecom?.results
           .sort((a, b) => b.popularity - a.popularity)
           .map((elem, i) => <MovieCard key={i} movie={elem} />)

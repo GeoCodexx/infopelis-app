@@ -7,8 +7,6 @@ import { convertRuntime } from "../helpers/RuntimeConveter";
 import RecomMovies from "./RecomMovies";
 import CastMovie from "./CastMovie";
 import OverlayTrailer from "../components/OverlayTrailer";
-import { useRef } from "react";
-import { useEffect } from "react";
 
 const Detail = () => {
   const { id } = useParams();
@@ -60,7 +58,7 @@ const Detail = () => {
     };
   }, []);*/
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="text-center">Cargando Detalles...</div>;
   else if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -84,7 +82,7 @@ const Detail = () => {
               />
               <div className="text-center mt-1">
                 <button
-                  className="bg-white/20 text-white px-3 py-1 rounded"
+                  className="bg-white/20 text-white px-3 py-1 rounded hover:bg-white/30 transition-colors"
                   onClick={openOverlay}
                 >
                   <FaPlay className="inline-block text-sm" />
@@ -154,15 +152,15 @@ const Detail = () => {
               </div>
             </div>
           </div>
-          <div className="container mt-3">
+          <div className="container mt-4">
             <div className="cast-scroller">
-              <h2 className="font-semibold text-lg">Reparto Principal</h2>
-              <div className="cast_scroller border-t-2 border-gray-300 flex overflow-x-scroll py-3">
+              <h2 className="font-semibold text-lg mb-1">Reparto Principal</h2>
+              <div className="cast_scroller border-t-2 border-gray-300 flex overflow-x-scroll py-4">
                 <CastMovie idmovie={id} />
               </div>
             </div>
             <div className="recom-movies mt-4">
-              <h2 className="font-semibold text-lg">Películas Recomendadas</h2>
+              <h2 className="font-semibold text-lg mb-1">Películas Recomendadas</h2>
               <div className="border-t-2 border-gray-300 grid grid-cols-2 p-3 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-6 gap-1 py-5">
                 <RecomMovies idMovie={id} />
               </div>

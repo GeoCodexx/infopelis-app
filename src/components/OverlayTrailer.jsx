@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import "./OverlayTrailer.css"; // Importa los estilos del overlay
 import { getMovieVideos } from "../services/Api";
-import { MdClose } from "react-icons/md";
 const OverlayTrailer = ({ movieId, onClose }) => {
   const {
     isLoading,
@@ -13,7 +12,7 @@ const OverlayTrailer = ({ movieId, onClose }) => {
     queryFn: () => getMovieVideos(movieId),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="text-center">Cargando...</div>;
   else if (error) return <div>Error: {error.message}</div>;
 
   const trailer = videos?.results.find((v) => v.type === "Trailer"); //`https://www.youtube.com/embed/${videoId}`;
@@ -23,7 +22,7 @@ const OverlayTrailer = ({ movieId, onClose }) => {
 
   return (
     <div className="video-overlay">
-      <div className="video-overlay-content w-[426px] h-[240px] sm:w-[640px] sm:h-[360px] md:w-[854px] md:h-[480px] xl:w-[1280px] xl:h-[720px]">
+      <div className="video-overlay-content w-[426px] h-[240px] sm:w-[640px] sm:h-[360px] md:w-[854px] md:h-[480px] relative">
         {videoUrl !== null ? (
           <iframe
             title="YouTube Video"
@@ -33,14 +32,12 @@ const OverlayTrailer = ({ movieId, onClose }) => {
           ></iframe>
         ) : (
           <h1 className="text-white text-lg font-semibold">
-            NO SE ENCONTRO TRAILER PARA ESTA PELICULA
+            NO SE ENCONTRÓ TRAILER PARA ESTA PELÍCULA
           </h1>
         )}
-        <button
-          className="bg-gray-700 hover:bg-gray-400 font-bold py-2 px-4 rounded inline-flex items-center text-white"
-          onClick={onClose}
-        >
-          <MdClose />
+
+        <button className="hover:bg-slate-700 transition-colors" onClick={onClose}>
+          {/* <MdClose className="mt-1"/> */}
           <span>Cerrar</span>
         </button>
       </div>
