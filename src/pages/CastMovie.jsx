@@ -2,10 +2,14 @@ import React from "react";
 import { getMovieCredits } from "../services/Api";
 import { useQuery } from "@tanstack/react-query";
 import noImage from "../assets/images/no-photo-profile.png";
+import { DarkModeContext } from "../context/DarkModeProvider";
+import { useContext } from "react";
 
 const CastMovie = ({ idmovie }) => {
   const urlPoster = "https://image.tmdb.org/t/p/w138_and_h175_face";
   //const urlPoster = "https://image.tmdb.org/t/p/original";
+
+  const { darkMode } = useContext(DarkModeContext);
 
   const {
     data: items,
@@ -25,7 +29,9 @@ const CastMovie = ({ idmovie }) => {
       {items?.cast &&
         items?.cast.map((c, i) => (
           <div
-            className="card my-1 mx-2 min-w-[138px] max-w-[138px] rounded-md text-center bg-white overflow-hidden shadow-md border border-gray-200"
+            className={`card my-1 mx-2 min-w-[138px] max-w-[138px] rounded-md text-center bg-white overflow-hidden shadow-md  ${
+              darkMode ? "dark-cast" : "border border-gray-200"
+            }`}
             key={i}
           >
             <img

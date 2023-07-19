@@ -8,9 +8,9 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     background-color: #fff;
     color: #4a4b4b;
-    font-family: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    /*font-family: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
       Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
-      Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+      Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;*/
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -19,20 +19,83 @@
     min-width: 340px;
   }
 
-  *, *:before, *:after {
+  ::-webkit-scrollbar {
+    width: 10px; /* Ancho del scrollbar vertical */
+    height: 10px; /* Altura del scrollbar horizontal */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #808080; /* Color del thumb (parte deslizable del scrollbar) */
+    border-radius: 3px; /* Borde redondeado del thumb */
+  }
+  
+  /* Cambiar el estilo del scrollbar horizontal en navegadores webkit (Google Chrome, Safari) */
+  ::-webkit-scrollbar-thumb:horizontal {
+    background-color: #808080; /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+  }
+  
+  /* Cambiar el estilo del scrollbar vertical en navegadores Firefox */
+  * {
+    scrollbar-width: thin; /* Ancho del scrollbar vertical */
+    scrollbar-color: #808080 transparent; /* Color del thumb (parte deslizable del scrollbar) */
+  }
+  
+  /* Cambiar el estilo del scrollbar horizontal en navegadores Firefox */
+  * {
+    scrollbar-width: thin; /* Altura del scrollbar horizontal */
+    scrollbar-color: transparent #808080; /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+  }
+  
+  /* Cambiar el color del thumb al hacer hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0; /* Color del thumb al hacer hover */
+  }
+  
+  /* Cambiar el color del thumb al hacer hover en scrollbar horizontal */
+  ::-webkit-scrollbar-thumb:horizontal:hover {
+    background-color: #a0a0a0; /* Color del thumb al hacer hover en scrollbar horizontal */
+  }
+  
+  /* Cambiar el color del thumb al hacer hover en Firefox */
+  * {
+    scrollbar-color: #a0a0a0 transparent; /* Color del thumb al hacer hover */
+  }
+  
+  /* Cambiar el color del thumb al hacer hover en scrollbar horizontal en Firefox */
+  * {
+    scrollbar-color: transparent #a0a0a0; /* Color del thumb al hacer hover en scrollbar horizontal */
+  }
+
+  *,
+  *:before,
+  *:after {
     box-sizing: inherit;
   }
 }
-/*
-body {
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  background-color: #fff;
-  color: #4a4b4b;
-  font-family: Rubik,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  margin: 0;
-  text-align: left;
-}*/
+
+.dark {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+  /*background-color: #0F0F0F;*/
+  color: #CCCCCC;
+}
+
+.dark .text-gray-300 {
+  color: #d1d5db;
+}
+
+.dark-body {
+  background-color: #212121;
+  color: #CCCCCC;
+}
+
+.dark-filter {
+  background-color: #2a323c;
+  /*background-color: #1D232A;*/
+  color: #CCCCCC;
+}
+
+.dark-cast{
+  background-color: #2a323c;
+  color: #CCCCCC;
+}

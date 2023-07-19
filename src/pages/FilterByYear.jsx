@@ -6,8 +6,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext } from "react";
 import noResultImage from "../assets/images/no-results.png";
 import Spinner from "../components/Spinner";
+import { DarkModeContext } from "../context/DarkModeProvider";
 
 const FilterByYear = () => {
+
+  const { darkMode } = useContext(DarkModeContext);
   const { rangeAnio } = useContext(Contexto);
 
   const fetchMovies = ({ pageParam = 1 }) =>
@@ -42,7 +45,7 @@ const FilterByYear = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-4 py-4">
+    <div className={`container mx-auto px-4 py-4 ${darkMode ? "dark-body" : ""}`}>
       {movies.length > 0 ? (
         <InfiniteScroll
           dataLength={movies.length}

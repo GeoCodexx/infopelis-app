@@ -5,8 +5,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import noResultImage from "../assets/images/no-results.png";
 import Spinner from "../components/Spinner";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/DarkModeProvider";
 
 const Search = () => {
+
+  const { darkMode } = useContext(DarkModeContext);
   const { word } = useParams();
 
   const fetchMovies = ({ pageParam = 1 }) => getSearchedMovies(pageParam, word);
@@ -40,7 +44,7 @@ const Search = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-4 py-4">
+    <div className={`container mx-auto px-4 py-4 ${darkMode ? "dark-body" : ""}`}>
       {movies.length > 0 ? (
         <InfiniteScroll
           dataLength={movies.length}

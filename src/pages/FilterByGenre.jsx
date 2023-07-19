@@ -6,8 +6,11 @@ import { useContext } from "react";
 import Contexto from "../context/Context";
 import noResultImage from "../assets/images/no-results.png";
 import Spinner from "../components/Spinner";
+import { DarkModeContext } from "../context/DarkModeProvider";
 
 const FilterByGenre = () => {
+
+  const { darkMode } = useContext(DarkModeContext);
   const { genres } = useContext(Contexto);
   const fetchMovies = ({ pageParam = 1 }) => getMoviesByGenre(pageParam, genres);
 
@@ -40,7 +43,7 @@ const FilterByGenre = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-4 py-4">
+    <div className={`container mx-auto px-4 py-4 ${darkMode ? "dark-body" : ""}`}>
       {movies.length > 0 ? (
         <InfiniteScroll
           dataLength={movies.length}

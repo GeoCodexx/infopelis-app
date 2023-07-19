@@ -3,8 +3,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../components/Spinner";
 import MovieCard from "../components/MovieCard";
+import { useContext } from "react";
+import { DarkModeContext } from "../context/DarkModeProvider";
 
 const Home = () => {
+  const { darkMode } = useContext(DarkModeContext);
+
   const fetchMovies = ({ pageParam = 1 }) => getUpcomingMovies(pageParam);
 
   const {
@@ -30,7 +34,7 @@ const Home = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-12 py-4">
+    <div className={`container mx-auto px-12 py-4 ${darkMode ? "dark-body" : ""}`}>
       <InfiniteScroll
         dataLength={movies.length} //This is important field to render the next data
         next={() => {
@@ -44,7 +48,7 @@ const Home = () => {
         }
       >
         <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
-          {movies.map((movie,i) => (
+          {movies.map((movie, i) => (
             <MovieCard key={i} movie={movie} />
           ))}
         </div>

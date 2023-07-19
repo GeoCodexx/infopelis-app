@@ -6,22 +6,28 @@ import { RiMovie2Line } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineHome } from "react-icons/ai";
 import { GrStarOutline } from "react-icons/gr";
-import { MdMovieFilter } from "react-icons/md";
+import {
+  MdClose,
+  MdDarkMode,
+  MdMovieFilter,
+  MdOutlineLightMode,
+} from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
 import { useEffect } from "react";
 import { useContext } from "react";
 import Contexto from "../context/Context";
+import { DarkModeContext } from "../context/DarkModeProvider";
 //import { useRef } from "react";
 
 const NavBar = () => {
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const { isCollapFilter, setIsCollapFilter } = useContext(Contexto);
+
   const navegacion = useNavigate();
-  //const searchBoxMain = useRef();
-  const location = useLocation();
-  const cleanSearchBar = location.pathname.startsWith("/detail/");
+  /*const location = useLocation();
+  const cleanSearchBar = location.pathname.startsWith("/detail/");*/
 
   const [isCollapsed, setIsCollapsed] = useState(true);
-  //const [isCollapsedFilter, setIsCollapsedFilter] = useState(true);
   const [isCollapsedSearch, setIsCollapsedSearch] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [rotation, setRotation] = useState(0);
@@ -55,7 +61,6 @@ const NavBar = () => {
   };
 
   const toggleCollapseFilter = () => {
-    //setIsCollapsedFilter(!isCollapsedFilter);
     setIsCollapFilter(!isCollapFilter);
     isCollapFilter && window.scrollTo(0, 0);
   };
@@ -66,25 +71,37 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="fixed w-full z-50 bg-white shadow">
+      <div
+        className={`fixed w-full z-50 bg-white shadow-md ${
+          darkMode ? "dark" : ""
+        }`}
+      >
         <nav className="navbar px-6 py-2 relative">
           <div className="flex justify-between sm:justify-center items-center">
+            {/**BUTTON MENU HAMBURGER*/}
             <div className="items-center pt-2">
               <button
                 onClick={toggleCollapse}
-                className="text-xl px-2 sm:hidden transition-transform transform-gpu duration-300 ease-in-out"
+                className="px-2 sm:hidden transition-transform transform-gpu duration-300 ease-in-out"
                 style={{ transform: `rotate(${rotation}deg)` }}
               >
-                {isCollapsed ? <GiHamburgerMenu /> : <GrClose />}
+                {isCollapsed ? (
+                  <GiHamburgerMenu className="w-6 h-6" />
+                ) : (
+                  <MdClose className="w-6 h-6" />
+                )}
               </button>
             </div>
 
             <div className="logo">
               <Link to="/" className="flex justify-center">
                 <RiMovie2Line className="text-red-500 text-2xl sm:text-4xl mt-1 sm:mt-0" />
-                <span className="text-2xl sm:text-3xl font-bold">InfoPelis</span>
+                <span className="text-2xl sm:text-3xl font-bold">
+                  InfoPelis
+                </span>
               </Link>
             </div>
+            {/**NAVEGATION LINKS NAVBAR */}
             <div className="nav-links sm:w-2/4 hidden sm:flex sm:justify-evenly px-10  text-lg">
               <NavLink
                 to="/"
@@ -123,12 +140,20 @@ const NavBar = () => {
                 Populares
               </NavLink>
             </div>
-            <div className="search-engine bg-zinc-100 items-center p-2 rounded-2xl hidden sm:flex lg:w-1/4">
+
+            {/**SEARCHBAR MAIN */}
+            <div
+              className={`search-engine ${
+                darkMode ? "bg-[#242b33]" : "bg-zinc-100 "
+              } items-center p-2 rounded-2xl hidden sm:flex lg:w-1/4`}
+            >
               <span className="mr-3">
                 <FaSearch />
               </span>
               <input
-                className="bg-zinc-100 focus:outline-none w-full"
+                className={`focus:outline-none w-full ${
+                  darkMode ? "bg-[#242b33]" : "bg-zinc-100 "
+                }`}
                 type="search"
                 placeholder="Buscar película..."
                 autoCorrect="off"
@@ -137,15 +162,57 @@ const NavBar = () => {
                 onChange={handleInputChange}
               />
             </div>
+
+            {/**RIGHT BUTTONS MOVIL */}
+            <div className="btns-menu-movil flex items-center sm:ml-10">
+              <button className="sm:hidden" onClick={toggleCollapseSearch}>
+                {isCollapsedSearch ? (
+                  <FaSearch className="text-lg" />
+                ) : (
+                  <MdClose className="w-6 h-6" />
+                )}
+              </button>
+              <button onClick={toggleCollapseFilter} className="sm:hidden mx-2">
+                {isCollapFilter ? (
+                  <FaFilter className="text-lg" />
+                ) : (
+                  <MdClose className="w-6 h-6" />
+                )}
+              </button>
+
+              {darkMode ? (
+                <button onClick={toggleDarkMode}>
+                  <MdOutlineLightMode className="w-6 h-6" />
+                </button>
+              ) : (
+                <button
+                  className="sm:shadow sm:rounded-full sm:p-1 sm:border sm:border-gray-200"
+                  onClick={toggleDarkMode}
+                >
+                  <MdDarkMode className="w-6 h-6" />
+                </button>
+              )}
+            </div>
             {/*Buttons right side menu movil */}
-            <div className="btns-right-menu px-2 pt-2 flex text-lg">
-              <button onClick={toggleCollapseFilter} className={cleanSearchBar ? 'hidden px-2': 'px-2 sm:hidden'}>
-                {isCollapFilter ? <FaFilter /> : <GrClose />}
+            {/* <div className="btns-right-menu px-2 pt-2 flex items-center">
+              <button
+                onClick={toggleCollapseFilter}
+                className={cleanSearchBar ? "hidden px-2" : "px-2 sm:hidden"}
+              >
+                {isCollapFilter ? (
+                  <FaFilter className="text-lg" />
+                ) : (
+                  <GrClose className="w-6 h-6" />
+                )}
               </button>
               <button className="ml-2 sm:hidden" onClick={toggleCollapseSearch}>
-                {isCollapsedSearch ? <FaSearch /> : <GrClose />}
-              </button>
-            </div>
+                {isCollapsedSearch ? (
+                  <FaSearch className="text-lg" />
+                ) : (
+                  <GrClose className="w-6 h-6" />
+                )}
+              </button> 
+            </div>*/}
           </div>
           {/*mobile box search */}
           <div

@@ -8,6 +8,7 @@ import { Rating } from "@smastrom/react-rating";
 import { useContext } from "react";
 import Contexto from "../context/Context";
 import { useNavigate } from "react-router-dom";
+import { DarkModeContext } from "../context/DarkModeProvider";
 
 const Filter = () => {
   const currentDate = new Date();
@@ -22,7 +23,9 @@ const Filter = () => {
     { value: "vanilla", label: "Vanilla" },
   ];
 
+  const { darkMode } = useContext(DarkModeContext);
   const { isCollapFilter } = useContext(Contexto);
+
   const naveg = useNavigate();
   const selectInputRef = useRef();
 
@@ -99,7 +102,7 @@ const Filter = () => {
     <div
       className={`container mx-auto pt-[54px] px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md z-10 ${
         isCollapFilter ? "hidden" : "block"
-      }`}
+      } ${darkMode ? "dark-body" : ""}`}
     >
       <div className="flex items-center text-base mb-1 sm:mb-0 pt-3">
         <FaFilter className="mr-1" />
@@ -107,10 +110,23 @@ const Filter = () => {
       </div>
       <div className="w-full px-7 sm:px-3 py-1 items-center sm:flex sm:justify-evenly">
         <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
-          <p className="font-medium">Género</p>
+          <p className="font-medium sm:mb-2">Género</p>
           <div className="w-full">
             <Select
               ref={selectInputRef}
+              styles={{
+                menuList: (styles) => ({
+                  ...styles,
+                  background: darkMode && "#212121",
+                  cursor: "pointer",
+                }),
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: darkMode && "none",
+                  backgroundColor: darkMode && "#242b33",
+                  cursor: "pointer",
+                }),
+              }}
               closeMenuOnSelect={true}
               components={animatedComponents}
               options={optionsGenre ? optionsGenre : options}
@@ -121,8 +137,8 @@ const Filter = () => {
                 //borderRadius: 2,
                 colors: {
                   ...theme.colors,
-                  primary25: "#EEEEEE",
-                  primary50: "#DCDEDC",
+                  primary25: darkMode ? "#2B3039" : "#EEEEEE",
+                  //primary50: "#d67718",
                   primary: "grey",
                 },
               })}
@@ -132,11 +148,15 @@ const Filter = () => {
         </div>
 
         <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
-          <p className="font-medium">Año</p>
+          <p className="font-medium sm:mb-2">Año</p>
           <div className="md:w-4/5 flex justify-start sm:justify-center items-center">
             <div className="flex">
               <input
-                className="bg-zinc-100 focus:outline-none rounded-md text-center py-1 cursor-pointer border border-gray-300"
+                className={`${
+                  darkMode
+                    ? "bg-[#242b33]"
+                    : "bg-zinc-100 border border-gray-300"
+                } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
                 type="number"
                 min="1900"
                 max={currentYear}
@@ -149,7 +169,11 @@ const Filter = () => {
               <span className="text-semibold mx-1">-</span>
 
               <input
-                className="bg-zinc-100 focus:outline-none rounded-md text-center py-1 cursor-pointer border border-gray-300"
+                className={`${
+                  darkMode
+                    ? "bg-[#242b33]"
+                    : "bg-zinc-100 border border-gray-300"
+                } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
                 type="number"
                 min="1900"
                 max={currentYear}
@@ -160,18 +184,27 @@ const Filter = () => {
               />
             </div>
             <div className="ml-1">
-              <button
-                className="rounded-md shadow-md border border-gray-300 py-1 px-3 bg-slate-500 hover:bg-slate-600 text-white"
-                onClick={handleOnChangeYear}
-              >
-                Ir
-              </button>
+              {darkMode ? (
+                <button
+                  className="rounded-md py-1 px-4 border hover:border-none border-[#CCCCCC] hover:bg-[#4a4d52] text-[#CCCCCC] transition"
+                  onClick={handleOnChangeYear}
+                >
+                  Ir
+                </button>
+              ) : (
+                <button
+                  className="rounded-md shadow-md border border-gray-300 py-1 px-4 bg-gray-400 hover:bg-slate-600 text-white transition duration-300 ease-in-out"
+                  onClick={handleOnChangeYear}
+                >
+                  Ir
+                </button>
+              )}
             </div>
           </div>
         </div>
 
         <div className="sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
-          <p className="font-medium">Rating</p>
+          <p className="font-medium sm:mb-2">Rating</p>
           <div style={{ maxWidth: 140, width: "100%" }}>
             <div className="w-full mt-1">
               <Rating value={rating} onChange={setRating} />

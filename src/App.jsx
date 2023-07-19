@@ -6,6 +6,7 @@ import Router from "./routes/Router";
 import "@smastrom/react-rating/style.css";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
+import { DarkModeProvider } from "./context/DarkModeProvider";
 
 function App() {
   const location = useLocation();
@@ -13,11 +14,13 @@ function App() {
 
   return (
     <>
-      <NavBar />
-      {!shouldHideFilter && <Filter />}
-      <Router />
-      <ScrollToTop />
-      <Footer />
+      <DarkModeProvider>
+        <NavBar />
+        {!shouldHideFilter && <Filter />}
+        <Router />
+        <ScrollToTop />
+        <Footer />
+      </DarkModeProvider>
     </>
   );
 }

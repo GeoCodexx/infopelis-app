@@ -4,17 +4,11 @@ import { getPopularMovies } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../components/Spinner";
+import { DarkModeContext } from "../context/DarkModeProvider";
+import { useContext } from "react";
 
 const Popular = () => {
-  /*const {
-    isLoading,
-    data: popularMovie,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["populars"],
-    queryFn: getPopularMovies,
-  });*/
+  const { darkMode } = useContext(DarkModeContext);
   const fetchMovies = ({ pageParam = 1 }) => getPopularMovies(pageParam);
 
   const {
@@ -44,7 +38,9 @@ const Popular = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-4 py-4">
+    <div
+      className={`container mx-auto px-4 py-4 ${darkMode ? "dark-body" : ""}`}
+    >
       <InfiniteScroll
         dataLength={movies.length} //This is important field to render the next data
         next={() => {
@@ -58,7 +54,7 @@ const Popular = () => {
         }
       >
         <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
-          {movies.map((movie,i) => (
+          {movies.map((movie, i) => (
             <MovieCard key={i} movie={movie} />
           ))}
         </div>
