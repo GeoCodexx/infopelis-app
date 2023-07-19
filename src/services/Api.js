@@ -7,7 +7,7 @@ const instance = axios.create({
   },
   params: {
     api_key: "38e8af813419a0bf35589e9e45f70570",
-    language: "es",
+    //language: "es",
     include_adult: false,
   },
 });

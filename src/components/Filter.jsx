@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaFilter } from "react-icons/fa";
 import { getGenres } from "../services/Api";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +8,6 @@ import { Rating } from "@smastrom/react-rating";
 import { useContext } from "react";
 import Contexto from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import { MdCleaningServices } from "react-icons/md";
-import { useRef } from "react";
 
 const Filter = () => {
   const currentDate = new Date();
@@ -24,6 +22,7 @@ const Filter = () => {
     { value: "vanilla", label: "Vanilla" },
   ];
 
+  const { isCollapFilter } = useContext(Contexto);
   const naveg = useNavigate();
   const selectInputRef = useRef();
 
@@ -97,10 +96,14 @@ const Filter = () => {
   }, [rating]);
 
   return (
-    <div className="container mx-auto px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md">
-      <div className="flex items-center text-base mb-2 sm:mb-0">
+    <div
+      className={`container mx-auto pt-[54px] px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md z-10 ${
+        isCollapFilter ? "hidden" : "block"
+      }`}
+    >
+      <div className="flex items-center text-base mb-1 sm:mb-0 pt-3">
         <FaFilter className="mr-1" />
-        <span>Filtros:</span>
+        <span className="font-semibold">Filtros:</span>
       </div>
       <div className="w-full px-7 sm:px-3 py-1 items-center sm:flex sm:justify-evenly">
         <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
@@ -170,7 +173,7 @@ const Filter = () => {
         <div className="sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
           <p className="font-medium">Rating</p>
           <div style={{ maxWidth: 140, width: "100%" }}>
-            <div className="w-full mt-2">
+            <div className="w-full mt-1">
               <Rating value={rating} onChange={setRating} />
             </div>
           </div>

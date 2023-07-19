@@ -62,11 +62,11 @@ const Detail = () => {
   else if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto pt-14">
       {movie && (
         <>
           <div
-            className="grid gap-y-2 sm:gap-2 sm:grid-cols-2 p-4 md:grid-cols-2 lg:grid-cols-3 items-center"
+            className="panel-info rounded-md grid gap-y-2 sm:gap-2 sm:grid-cols-2 p-4 md:grid-cols-2 lg:grid-cols-3 items-center"
             style={{
               backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdrop}${movie.backdrop_path})`,
               backgroundSize: "cover",
@@ -80,7 +80,7 @@ const Detail = () => {
                 alt={movie.title}
                 onError={handleError}
               />
-              <div className="text-center mt-1">
+              {movie.overview && <div className="box-btn-trailer text-center mt-3">
                 <button
                   className="bg-white/20 text-white px-3 py-1 rounded hover:bg-white/30 transition-colors"
                   onClick={openOverlay}
@@ -94,7 +94,8 @@ const Detail = () => {
                     <OverlayTrailer movieId={id} onClose={closeOverlay} />
                   </div>
                 )}
-              </div>
+              </div>}
+              
             </div>
             <div className="description p-3 text-white/90 lg:col-span-2 h-full">
               <div className="details-movie">
@@ -142,26 +143,26 @@ const Detail = () => {
                     <h2 className="font-semibold text-center text-lg">
                       Descripción general
                     </h2>
-                    <p className="text-justify mt-4">
+                    
                       {movie.overview
-                        ? movie.overview
-                        : "Ups...! No se encontro descripción alguna para esta pelicula."}
-                    </p>
+                        ? <p className="text-justify mt-4">{movie.overview}</p>
+                        : <p className="text-center mt-4">Ups...! No se encontró ninguna descripción para esta pelicula.</p>}
+                    
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container mt-4">
+          <div className="container mt-8">
             <div className="cast-scroller">
-              <h2 className="font-semibold text-lg mb-1">Reparto Principal</h2>
+              <h2 className="font-semibold text-xl mb-1 text-center sm:text-start sm:pl-2 md:pl-0">Reparto Principal</h2>
               <div className="cast_scroller border-t-2 border-gray-300 flex overflow-x-scroll py-4">
                 <CastMovie idmovie={id} />
               </div>
             </div>
-            <div className="recom-movies mt-4">
-              <h2 className="font-semibold text-lg mb-1">Películas Recomendadas</h2>
-              <div className="border-t-2 border-gray-300 grid grid-cols-2 p-3 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-6 gap-1 py-5">
+            <div className="recom-movies mt-8">
+              <h2 className="font-semibold text-xl mb-1 text-center sm:text-start sm:pl-2 md:pl-0">Películas Recomendadas</h2>
+              <div className="border-t-2 border-gray-300 grid sm:grid-cols-2 p-3 md:grid-cols-5 xl:grid-cols-6 gap-2 py-5">
                 <RecomMovies idMovie={id} />
               </div>
             </div>

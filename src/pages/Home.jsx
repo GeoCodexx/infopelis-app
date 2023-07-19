@@ -30,7 +30,7 @@ const Home = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className="container mx-auto px-4 py-4">
+    <div className="container mx-auto px-12 py-4">
       <InfiniteScroll
         dataLength={movies.length} //This is important field to render the next data
         next={() => {
@@ -43,9 +43,9 @@ const Home = () => {
           </div>
         }
       >
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+        <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
+          {movies.map((movie,i) => (
+            <MovieCard key={i} movie={movie} />
           ))}
         </div>
       </InfiniteScroll>

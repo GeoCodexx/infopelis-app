@@ -1,10 +1,5 @@
-/* .active{
-    color: red;
-} */
-
 .nav-links a:hover{
     font-weight: 500;
-    /*margin-right: 1rem;*/
 }
 
 .overlay-image {

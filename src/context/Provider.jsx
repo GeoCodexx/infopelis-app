@@ -6,6 +6,7 @@ const ProviderFilter = ({ children }) => {
   const [genres, setGenres] = useState([]);
   const [rangeAnio, setRangeAnio] = useState([]);
   const [rangeRating, setRangeRating] = useState([]);
+  const [isCollapFilter, setIsCollapFilter] = useState(true);
 
   return (
     <Contexto.Provider
@@ -16,6 +17,8 @@ const ProviderFilter = ({ children }) => {
         setRangeAnio,
         rangeRating,
         setRangeRating,
+        isCollapFilter,
+        setIsCollapFilter
       }}
     >
       {children}

@@ -4,9 +4,8 @@ import { getRecomMovies } from "../services/Api";
 import MovieCard from "../components/MovieCard";
 
 const RecomMovies = ({ idMovie }) => {
-  //console.log(idMovie);
-  //const urlPoster = "https://image.tmdb.org/t/p/w300";
 
+  //FETCH DATA
   const {
     data: listRecom,
     isLoading,
@@ -27,8 +26,10 @@ const RecomMovies = ({ idMovie }) => {
           .sort((a, b) => b.popularity - a.popularity)
           .map((elem, i) => <MovieCard key={i} movie={elem} />)
       ) : (
-        <div>
-          <h1 className="font-semibold text-center col-span-2 text-red-400">
+        <div className="col-span-6
+        
+        ">
+          <h1 className="font-semibold text-center mb-4">
             Ups...! No se encontraron películas recomendadas.
           </h1>
         </div>

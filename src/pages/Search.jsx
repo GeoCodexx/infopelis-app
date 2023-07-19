@@ -4,6 +4,7 @@ import MovieCard from "../components/MovieCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import noResultImage from "../assets/images/no-results.png";
+import Spinner from "../components/Spinner";
 
 const Search = () => {
   const { word } = useParams();
@@ -33,7 +34,9 @@ const Search = () => {
   }, [word]);*/
 
   return status === "loading" ? (
-    <div>Loading...</div>
+    <div style={{ textAlign: "center" }}>
+      <Spinner />
+    </div>
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
@@ -45,9 +48,13 @@ const Search = () => {
             fetchNextPage();
           }}
           hasMore={hasNextPage}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <div style={{ textAlign: "center" }}>
+              <Spinner />
+            </div>
+          }
         >
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-1 overflow-hidden">
+          <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
             {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
@@ -60,7 +67,11 @@ const Search = () => {
               Ups...! No se encontraron resultados de su busqueda.
             </p>
           </div>
-          <img  className="mt-6 w-3/4 sm:w-2/4 lg:w-1/4 mx-auto" src={noResultImage} alt="no-result-image" />
+          <img
+            className="mt-6 w-3/4 sm:w-2/4 lg:w-1/4 mx-auto"
+            src={noResultImage}
+            alt="no-result-image"
+          />
         </>
       )}
     </div>

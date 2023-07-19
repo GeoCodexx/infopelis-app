@@ -32,7 +32,7 @@ const OverlayTrailer = ({ movieId, onClose }) => {
           ></iframe>
         ) : (
           <h1 className="text-white text-lg font-semibold">
-            NO SE ENCONTRÓ TRAILER PARA ESTA PELÍCULA
+            NO SE ENCONTRÓ EL VIDEO TRAILER.
           </h1>
         )}
 

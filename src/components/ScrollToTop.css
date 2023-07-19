@@ -1,0 +1,14 @@
+.btn-scrollTop{
+    position: fixed;
+    bottom: 40px;
+    font-size: 2.5rem;
+    z-index: 1;
+    cursor: pointer;
+    color: rgb(223, 3, 3);
+    right: 3%;
+    background: none;
+    border-radius: 50px;
+    padding: 0px;
+    border: none;
+    opacity: 0.9;
+}
