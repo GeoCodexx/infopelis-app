@@ -42,8 +42,8 @@ const Filter = () => {
     queryFn: getGenres,
   });
 
-  if (isLoading) console.log("Loading...");
-  else if (isError) console.error(error.message);
+  //if (isLoading) console.log("Loading...");
+  if (isError) console.error(error.message);
 
   const optionsGenre = data?.genres.map((elemento) => {
     return { value: `${elemento.id}`, label: `${elemento.name}` };
@@ -100,114 +100,123 @@ const Filter = () => {
 
   return (
     <div
-      className={`container mx-auto pt-[54px] px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md z-10 ${
-        isCollapFilter ? "hidden" : "block"
-      } ${darkMode ? "dark-body" : ""}`}
+      className={`main ${
+        darkMode ? "dark-body" : ""
+      } transition duration-500 ease-in-out`}
     >
-      <div className="flex items-center text-base mb-1 sm:mb-0 pt-3">
-        <FaFilter className="mr-1" />
-        <span className="font-semibold">Filtros:</span>
-      </div>
-      <div className="w-full px-7 sm:px-3 py-1 items-center sm:flex sm:justify-evenly">
-        <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
-          <p className="font-medium sm:mb-2">Género</p>
-          <div className="w-full">
-            <Select
-              ref={selectInputRef}
-              styles={{
-                menuList: (styles) => ({
-                  ...styles,
-                  background: darkMode && "#212121",
-                  cursor: "pointer",
-                }),
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  border: darkMode && "none",
-                  backgroundColor: darkMode && "#242b33",
-                  cursor: "pointer",
-                }),
-              }}
-              closeMenuOnSelect={true}
-              components={animatedComponents}
-              options={optionsGenre ? optionsGenre : options}
-              placeholder="Seleccione..."
-              isMulti
-              theme={(theme) => ({
-                ...theme,
-                //borderRadius: 2,
-                colors: {
-                  ...theme.colors,
-                  primary25: darkMode ? "#2B3039" : "#EEEEEE",
-                  //primary50: "#d67718",
-                  primary: "grey",
-                },
-              })}
-              onChange={handleOnChangeSelect}
-            />
-          </div>
+      <div
+        className={`container mx-auto pt-[54px] px-1 sm:px-4 py-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center text-sm sm:text-base sm:justify-between shadow-md z-10 ${
+          isCollapFilter ? "hidden" : "block"
+        }`}
+      >
+        <div className="flex items-center text-base mb-1 sm:mb-0 pt-3">
+          <FaFilter className="mr-1" />
+          <span className="font-semibold">Filtros:</span>
         </div>
-
-        <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
-          <p className="font-medium sm:mb-2">Año</p>
-          <div className="md:w-4/5 flex justify-start sm:justify-center items-center">
-            <div className="flex">
-              <input
-                className={`${
-                  darkMode
-                    ? "bg-[#242b33]"
-                    : "bg-zinc-100 border border-gray-300"
-                } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
-                type="number"
-                min="1900"
-                max={currentYear}
-                step="1"
-                value={startYear}
-                onChange={(e) => setStartYear(e.target.value)}
-                onFocus={(event) => event.target.select()}
-              />
-
-              <span className="text-semibold mx-1">-</span>
-
-              <input
-                className={`${
-                  darkMode
-                    ? "bg-[#242b33]"
-                    : "bg-zinc-100 border border-gray-300"
-                } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
-                type="number"
-                min="1900"
-                max={currentYear}
-                step="1"
-                value={endYear}
-                onChange={(e) => setEndYear(e.target.value)}
-                onFocus={(event) => event.target.select()}
+        <div className="w-full px-7 sm:px-3 py-1 items-center sm:flex sm:justify-evenly">
+          <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center">
+            <p className="font-medium sm:mb-2">Género</p>
+            <div className="w-full">
+              <Select
+                ref={selectInputRef}
+                styles={{
+                  menuList: (styles) => ({
+                    ...styles,
+                    background: darkMode && "#212121",
+                    cursor: "pointer",
+                  }),
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: darkMode && "none",
+                    backgroundColor: darkMode && "#242b33",
+                    cursor: "pointer",
+                  }),
+                }}
+                closeMenuOnSelect={true}
+                components={animatedComponents}
+                options={optionsGenre ? optionsGenre : options}
+                placeholder="Seleccione..."
+                isMulti
+                theme={(theme) => ({
+                  ...theme,
+                  //borderRadius: 2,
+                  colors: {
+                    ...theme.colors,
+                    primary25: darkMode ? "#2B3039" : "#EEEEEE",
+                    neutral10: darkMode? "#424242":"hsl(0, 0%, 90%)",
+                    neutral80: darkMode? "#cccccc":"hsl(0, 0%, 20%)",
+                    dangerLight: darkMode? "#212121":"#FFBDAD",
+                    primary50: "#E0E0E0",
+                    primary: "grey",
+                  },
+                })}
+                onChange={handleOnChangeSelect}
               />
             </div>
-            <div className="ml-1">
-              {darkMode ? (
-                <button
-                  className="rounded-md py-1 px-4 border hover:border-none border-[#CCCCCC] hover:bg-[#4a4d52] text-[#CCCCCC] transition"
-                  onClick={handleOnChangeYear}
-                >
-                  Ir
-                </button>
-              ) : (
-                <button
-                  className="rounded-md shadow-md border border-gray-300 py-1 px-4 bg-gray-400 hover:bg-slate-600 text-white transition duration-300 ease-in-out"
-                  onClick={handleOnChangeYear}
-                >
-                  Ir
-                </button>
-              )}
+          </div>
+
+          <div className="mb-3 sm:mb-0 sm:w-48 lg:w-1/4 sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
+            <p className="font-medium sm:mb-2">Año</p>
+            <div className="md:w-4/5 flex justify-start sm:justify-center items-center">
+              <div className="flex">
+                <input
+                  className={`${
+                    darkMode
+                      ? "bg-[#242b33]"
+                      : "bg-zinc-100 border border-gray-300"
+                  } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
+                  type="number"
+                  min="1900"
+                  max={currentYear}
+                  step="1"
+                  value={startYear}
+                  onChange={(e) => setStartYear(e.target.value)}
+                  onFocus={(event) => event.target.select()}
+                />
+
+                <span className="text-semibold mx-1">-</span>
+
+                <input
+                  className={`${
+                    darkMode
+                      ? "bg-[#242b33]"
+                      : "bg-zinc-100 border border-gray-300"
+                  } focus:outline-none rounded-md text-center py-1 cursor-pointer`}
+                  type="number"
+                  min="1900"
+                  max={currentYear}
+                  step="1"
+                  value={endYear}
+                  onChange={(e) => setEndYear(e.target.value)}
+                  onFocus={(event) => event.target.select()}
+                />
+              </div>
+              <div className="ml-1 overflow-hidden">
+                {darkMode ? (
+                  <button
+                    className="rounded-md py-1 px-4 bg-[#545454] hover:bg-[#3a3d32] text-[#CCCCCC] transition"
+                    onClick={handleOnChangeYear}
+                  >
+                    Ir
+                  </button>
+                ) : (
+                  <button
+                    className="rounded-md shadow-md border border-gray-300 py-1 px-4 bg-gray-400 hover:bg-slate-600 text-white transition duration-300 ease-in-out"
+                    onClick={handleOnChangeYear}
+                  >
+                    Ir
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
-          <p className="font-medium sm:mb-2">Rating</p>
-          <div style={{ maxWidth: 140, width: "100%" }}>
-            <div className="w-full mt-1">
-              <Rating value={rating} onChange={setRating} />
+          <div className="sm:flex sm:flex-col items-center sm:ml-9 md:ml-0">
+            <p className="font-medium sm:mb-2">Rating</p>
+            <div style={{ maxWidth: 140, width: "100%" }}>
+              <div className="w-full mt-1">
+                <Rating value={rating} onChange={setRating} />
+              </div>
             </div>
           </div>
         </div>

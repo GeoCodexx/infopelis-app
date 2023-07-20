@@ -181,12 +181,13 @@ const NavBar = () => {
               </button>
 
               {darkMode ? (
-                <button onClick={toggleDarkMode}>
+                <button onClick={toggleDarkMode} title="Tema Claro">
                   <MdOutlineLightMode className="w-6 h-6" />
                 </button>
               ) : (
                 <button
                   className="sm:shadow sm:rounded-full sm:p-1 sm:border sm:border-gray-200"
+                  title="Tema Oscuro"
                   onClick={toggleDarkMode}
                 >
                   <MdDarkMode className="w-6 h-6" />

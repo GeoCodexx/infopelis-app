@@ -34,7 +34,8 @@ const Home = () => {
   ) : status === "error" ? (
     <p>Error: {error.message}</p>
   ) : (
-    <div className={`container mx-auto px-12 py-4 ${darkMode ? "dark-body" : ""}`}>
+    <div className={`main ${darkMode ? "dark-body" : ""} transition duration-500 ease-in-out`}>
+    <div className="container mx-auto px-12 py-4">
       <InfiniteScroll
         dataLength={movies.length} //This is important field to render the next data
         next={() => {
@@ -53,7 +54,7 @@ const Home = () => {
           ))}
         </div>
       </InfiniteScroll>
-    </div>
+    </div></div>
   );
 };
 

@@ -39,26 +39,30 @@ const Popular = () => {
     <p>Error: {error.message}</p>
   ) : (
     <div
-      className={`container mx-auto px-4 py-4 ${darkMode ? "dark-body" : ""}`}
+      className={`main ${
+        darkMode ? "dark-body" : ""
+      } transition duration-500 ease-in-out`}
     >
-      <InfiniteScroll
-        dataLength={movies.length} //This is important field to render the next data
-        next={() => {
-          fetchNextPage();
-        }}
-        hasMore={hasNextPage}
-        loader={
-          <div style={{ textAlign: "center" }}>
-            <Spinner />
+      <div className="container mx-auto px-4 py-4">
+        <InfiniteScroll
+          dataLength={movies.length} //This is important field to render the next data
+          next={() => {
+            fetchNextPage();
+          }}
+          hasMore={hasNextPage}
+          loader={
+            <div style={{ textAlign: "center" }}>
+              <Spinner />
+            </div>
+          }
+        >
+          <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
+            {movies.map((movie, i) => (
+              <MovieCard key={i} movie={movie} />
+            ))}
           </div>
-        }
-      >
-        <div className="container-cards rounded grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-6 gap-2 overflow-hidden">
-          {movies.map((movie, i) => (
-            <MovieCard key={i} movie={movie} />
-          ))}
-        </div>
-      </InfiniteScroll>
+        </InfiniteScroll>
+      </div>
     </div>
   );
 };

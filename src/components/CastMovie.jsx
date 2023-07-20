@@ -21,8 +21,8 @@ const CastMovie = ({ idmovie }) => {
     queryFn: () => getMovieCredits(idmovie),
   });
 
-  if (isLoading) console.log("Cargando Creditos");
-  else if (isError) console.error(error.message);
+  //if (isLoading) console.log("Cargando Creditos");
+  if (isError) console.error(error.message);
   //console.log(items);
   return (
     <>

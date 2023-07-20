@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { getRecomMovies } from "../services/Api";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "./MovieCard";
 
 const RecomMovies = ({ idMovie }) => {
 
@@ -16,8 +16,8 @@ const RecomMovies = ({ idMovie }) => {
     queryFn: () => getRecomMovies(1, idMovie),
   });
 
-  if (isLoading) console.log("Cargando Videos Recomendados...");
-  else if (isError) console.error(error.message);
+  //if (isLoading) console.log("Cargando Videos Recomendados...");
+  if (isError) console.error(error.message);
   //console.log(listRecom.results);
   return (
     <>
