@@ -41,7 +41,7 @@ const Popular = () => {
     <div
       className={`main ${
         darkMode ? "dark-body" : ""
-      } transition duration-500 ease-in-out`}
+      } transition ease-in-out`}
     >
       <div className="container mx-auto px-4 py-4">
         <InfiniteScroll

@@ -47,7 +47,7 @@ const FilterByYear = () => {
     <div
       className={`main ${
         darkMode ? "dark-body" : ""
-      } transition duration-500 ease-in-out`}
+      } transition ease-in-out`}
     >
       <div className="container mx-auto px-4 py-4">
         {movies.length > 0 ? (
@@ -70,18 +70,18 @@ const FilterByYear = () => {
             </div>
           </InfiniteScroll>
         ) : (
-          <>
-            <div className="bg-red-200 rounded-md p-4 mt-5 text-center ">
-              <p className="text-base">
+          <div className={darkMode ? "dark-body h-screen" : "main"}>
+            <div className="mt-10 p-4 sm:mt-5 text-center ">
+              <p className="sm:text-lg font-semibold">
                 Ups...! No se encontraron resultados de su busqueda.
               </p>
+              <img
+                className="mt-6 w-3/4 sm:w-2/4 lg:w-1/4 mx-auto"
+                src={noResultImage}
+                alt="no-result-image"
+              />
             </div>
-            <img
-              className="mt-6 w-3/4 sm:w-2/4 lg:w-1/4 mx-auto"
-              src={noResultImage}
-              alt="no-result-image"
-            />
-          </>
+          </div>
         )}
       </div>
     </div>

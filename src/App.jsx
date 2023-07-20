@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <DarkModeProvider>
-        <NavBar />
+          <NavBar />
         {!shouldHideFilter && <Filter />}
         <Router />
         <ScrollToTop />
