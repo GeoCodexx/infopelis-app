@@ -63,7 +63,7 @@ const Detail = () => {
             <div
               className="panel-info rounded-md grid gap-y-2 sm:gap-2 sm:grid-cols-2 p-4 md:grid-cols-2 lg:grid-cols-3 items-center"
               style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdrop}${movie.backdrop_path})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${backdrop}${movie.backdrop_path})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
@@ -93,7 +93,7 @@ const Detail = () => {
                   </div>
                 )}
               </div>
-              <div className="description p-3 text-[#c9c6c6] lg:col-span-2 h-full">
+              <div className="description p-3 text-[#afaeae] lg:col-span-2 h-full">
                 <div className="details-movie">
                   <h2 className="font-semibold text-2xl text-center">
                     {movie.title}
@@ -102,8 +102,8 @@ const Detail = () => {
                     {movie.tagline && `"${movie.tagline}"`}
                   </p>
 
-                  <div className="date">
-                    <div className="bg-white/10 rounded-lg p-4 leading-6 mt-2">
+                  <div className="date font">
+                    <div className="bg-black/60 rounded-lg p-4 leading-6 mt-2">
                       <p>
                         <span className="font-medium">
                           Título original: &nbsp;
@@ -135,17 +135,17 @@ const Detail = () => {
                         </span>
                       </p>
                     </div>
-                    <div className="bg-white/10 rounded-lg p-4 mt-4">
+                    <div className="bg-black/60 rounded-lg p-4 mt-4">
                       <h2 className="font-semibold text-center text-lg">
-                        Descripción general
+                        Descripción General
                       </h2>
 
                       {movie.overview ? (
-                        <p className="text-justify mt-4">{movie.overview}</p>
+                        <p className="text-justify mt-4 font-medium">{movie.overview}</p>
                       ) : (
                         <p className="text-center mt-4">
                           Ups...! No se encontró ninguna descripción para esta
-                          pelicula.
+                          película.
                         </p>
                       )}
                     </div>

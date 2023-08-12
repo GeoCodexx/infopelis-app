@@ -1,106 +1,122 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-@layer base {
-  html {
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    background-color: #fff;
-    color: #4a4b4b;
-    /*font-family: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  @layer base {
+    html {
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      background-color: #fff;
+      color: #4a4b4b;
+      font-family: Poppins;
+      /*font-family: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
       Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
       Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;*/
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    margin: 0;
-    box-sizing: border-box;
-    min-width: 340px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      margin: 0;
+      box-sizing: border-box;
+      min-width: 340px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      /* Ancho del scrollbar vertical */
+      height: 10px;
+      /* Altura del scrollbar horizontal */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #808080;
+      /* Color del thumb (parte deslizable del scrollbar) */
+      border-radius: 3px;
+      /* Borde redondeado del thumb */
+    }
+
+    /* Cambiar el estilo del scrollbar horizontal en navegadores webkit (Google Chrome, Safari) */
+    ::-webkit-scrollbar-thumb:horizontal {
+      background-color: #808080;
+      /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+    }
+
+    /* Cambiar el estilo del scrollbar vertical en navegadores Firefox */
+    * {
+      scrollbar-width: thin;
+      /* Ancho del scrollbar vertical */
+      scrollbar-color: #808080 transparent;
+      /* Color del thumb (parte deslizable del scrollbar) */
+    }
+
+    /* Cambiar el estilo del scrollbar horizontal en navegadores Firefox */
+    * {
+      scrollbar-width: thin;
+      /* Altura del scrollbar horizontal */
+      scrollbar-color: transparent #808080;
+      /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+    }
+
+    /* Cambiar el color del thumb al hacer hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #a0a0a0;
+      /* Color del thumb al hacer hover */
+    }
+
+    /* Cambiar el color del thumb al hacer hover en scrollbar horizontal */
+    ::-webkit-scrollbar-thumb:horizontal:hover {
+      background-color: #a0a0a0;
+      /* Color del thumb al hacer hover en scrollbar horizontal */
+    }
+
+    /* Cambiar el color del thumb al hacer hover en Firefox */
+    * {
+      scrollbar-color: #a0a0a0 transparent;
+      /* Color del thumb al hacer hover */
+    }
+
+    /* Cambiar el color del thumb al hacer hover en scrollbar horizontal en Firefox */
+    * {
+      scrollbar-color: transparent #a0a0a0;
+      /* Color del thumb al hacer hover en scrollbar horizontal */
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
-  ::-webkit-scrollbar {
-    width: 10px; /* Ancho del scrollbar vertical */
-    height: 10px; /* Altura del scrollbar horizontal */
+  .dark {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+    color: #cccccc;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #808080; /* Color del thumb (parte deslizable del scrollbar) */
-    border-radius: 3px; /* Borde redondeado del thumb */
+  .dark .text-gray-300 {
+    color: #d1d5db;
   }
 
-  /* Cambiar el estilo del scrollbar horizontal en navegadores webkit (Google Chrome, Safari) */
-  ::-webkit-scrollbar-thumb:horizontal {
-    background-color: #808080; /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+  .dark-body {
+    background-color: #212121;
+    color: #cccccc;
   }
 
-  /* Cambiar el estilo del scrollbar vertical en navegadores Firefox */
-  * {
-    scrollbar-width: thin; /* Ancho del scrollbar vertical */
-    scrollbar-color: #808080 transparent; /* Color del thumb (parte deslizable del scrollbar) */
+  .dark-filter {
+    background-color: #2a323c;
+    /*background-color: #1D232A;*/
+    color: #cccccc;
   }
 
-  /* Cambiar el estilo del scrollbar horizontal en navegadores Firefox */
-  * {
-    scrollbar-width: thin; /* Altura del scrollbar horizontal */
-    scrollbar-color: transparent #808080; /* Color del thumb (parte deslizable del scrollbar) en scrollbar horizontal */
+  .dark-cast {
+    background-color: #2a323c;
+    color: #cccccc;
   }
-
-  /* Cambiar el color del thumb al hacer hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #a0a0a0; /* Color del thumb al hacer hover */
-  }
-
-  /* Cambiar el color del thumb al hacer hover en scrollbar horizontal */
-  ::-webkit-scrollbar-thumb:horizontal:hover {
-    background-color: #a0a0a0; /* Color del thumb al hacer hover en scrollbar horizontal */
-  }
-
-  /* Cambiar el color del thumb al hacer hover en Firefox */
-  * {
-    scrollbar-color: #a0a0a0 transparent; /* Color del thumb al hacer hover */
-  }
-
-  /* Cambiar el color del thumb al hacer hover en scrollbar horizontal en Firefox */
-  * {
-    scrollbar-color: transparent #a0a0a0; /* Color del thumb al hacer hover en scrollbar horizontal */
-  }
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-}
-
-.dark {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
-  color: #cccccc;
-}
-
-.dark .text-gray-300 {
-  color: #d1d5db;
-}
-
-.dark-body {
-  background-color: #212121;
-  color: #cccccc;
-}
-
-.dark-filter {
-  background-color: #2a323c;
-  /*background-color: #1D232A;*/
-  color: #cccccc;
-}
-
-.dark-cast {
-  background-color: #2a323c;
-  color: #cccccc;
-}
