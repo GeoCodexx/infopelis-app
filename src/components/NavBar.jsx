@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
 import { RiMovie2Line } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineHome } from "react-icons/ai";
-import { GrStarOutline } from "react-icons/gr";
 import {
   MdClose,
   MdDarkMode,
-  MdMovieFilter,
   MdOutlineLightMode,
 } from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
@@ -22,6 +18,10 @@ import { DarkModeContext } from "../context/DarkModeProvider";
 const NavBar = () => {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const { isCollapFilter, setIsCollapFilter } = useContext(Contexto);
+
+  const location = useLocation();
+  const shouldHideFilter = location.pathname.startsWith("/detail/");
+
 
   const navegacion = useNavigate();
   /*const location = useLocation();
@@ -166,20 +166,20 @@ const NavBar = () => {
 
             {/**RIGHT BUTTONS MOVIL */}
             <div className="btns-menu-movil flex items-center sm:ml-10">
-              <button className="sm:hidden" onClick={toggleCollapseSearch}>
+              <button className={`sm:hidden ${shouldHideFilter && 'mr-4'}`} onClick={toggleCollapseSearch}>
                 {isCollapsedSearch ? (
                   <FaSearch />
                 ) : (
                   <MdClose className="w-6 h-6" />
                 )}
               </button>
-              <button onClick={toggleCollapseFilter} className="sm:hidden mx-4">
+              {!shouldHideFilter && <button onClick={toggleCollapseFilter} className="sm:hidden mx-4">
                 {isCollapFilter ? (
                   <FaFilter />
                 ) : (
                   <MdClose className="w-6 h-6" />
                 )}
-              </button>
+              </button>}
 
               {darkMode ? (
                 <button onClick={toggleDarkMode} title="Tema Claro">
