@@ -63,6 +63,7 @@ const NavBar = () => {
   const toggleCollapseFilter = () => {
     setIsCollapFilter(!isCollapFilter);
     isCollapFilter && window.scrollTo(0, 0);
+
   };
 
   const toggleCollapseSearch = () => {
@@ -167,14 +168,14 @@ const NavBar = () => {
             <div className="btns-menu-movil flex items-center sm:ml-10">
               <button className="sm:hidden" onClick={toggleCollapseSearch}>
                 {isCollapsedSearch ? (
-                  <FaSearch className="text-lg" />
+                  <FaSearch />
                 ) : (
                   <MdClose className="w-6 h-6" />
                 )}
               </button>
-              <button onClick={toggleCollapseFilter} className="sm:hidden mx-2">
+              <button onClick={toggleCollapseFilter} className="sm:hidden mx-4">
                 {isCollapFilter ? (
-                  <FaFilter className="text-lg" />
+                  <FaFilter />
                 ) : (
                   <MdClose className="w-6 h-6" />
                 )}
@@ -182,7 +183,7 @@ const NavBar = () => {
 
               {darkMode ? (
                 <button onClick={toggleDarkMode} title="Tema Claro">
-                  <MdOutlineLightMode className="w-6 h-6" />
+                  <MdOutlineLightMode className="w-5 h-5" />
                 </button>
               ) : (
                 <button
@@ -190,30 +191,10 @@ const NavBar = () => {
                   title="Tema Oscuro"
                   onClick={toggleDarkMode}
                 >
-                  <MdDarkMode className="w-6 h-6" />
+                  <MdDarkMode className="w-5 h-5" />
                 </button>
               )}
             </div>
-            {/*Buttons right side menu movil */}
-            {/* <div className="btns-right-menu px-2 pt-2 flex items-center">
-              <button
-                onClick={toggleCollapseFilter}
-                className={cleanSearchBar ? "hidden px-2" : "px-2 sm:hidden"}
-              >
-                {isCollapFilter ? (
-                  <FaFilter className="text-lg" />
-                ) : (
-                  <GrClose className="w-6 h-6" />
-                )}
-              </button>
-              <button className="ml-2 sm:hidden" onClick={toggleCollapseSearch}>
-                {isCollapsedSearch ? (
-                  <FaSearch className="text-lg" />
-                ) : (
-                  <GrClose className="w-6 h-6" />
-                )}
-              </button> 
-            </div>*/}
           </div>
           {/*mobile box search */}
           <div
@@ -236,12 +217,18 @@ const NavBar = () => {
 
           {/* <!-- mobile menu --> */}
           <div
-            className={`menu-collapsible bg-white absolute top-full left-0 w-full border-t border-gray-300 z-10 ${
+            className={`${
+              darkMode ? "dark" : ""
+            } menu-collapsible bg-white absolute top-full left-0 w-full border-t border-gray-300 z-10 ${
               isCollapsed ? "hidden" : "block"
             }`}
           >
             <ul className="menu-mobil-collapsible shadow-lg">
-              <li className="py-2 px-4 hover:shadow hover:bg-gray-100 transition duration-200">
+              <li
+                className={`py-2 px-4 hover:shadow ${
+                  darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+                } transition duration-200`}
+              >
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -250,11 +237,14 @@ const NavBar = () => {
                       : "flex items-center hover:font-semibold transition duration-250"
                   }
                 >
-                  <AiOutlineHome className="inline-block align-middle mr-2" />
                   Inicio
                 </NavLink>
               </li>
-              <li className="py-2 px-4 hover:shadow hover:bg-gray-100 transition duration-200">
+              <li
+                className={`py-2 px-4 hover:shadow ${
+                  darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+                } transition duration-200`}
+              >
                 <NavLink
                   to="/premieres"
                   className={({ isActive }) =>
@@ -263,11 +253,14 @@ const NavBar = () => {
                       : "flex items-center hover:font-semibold transition duration-250"
                   }
                 >
-                  <MdMovieFilter className="mr-2" />
                   Estrenos
                 </NavLink>
               </li>
-              <li className="py-2 px-4 hover:shadow transition duration-200 hover:bg-gray-100 shadow">
+              <li
+                className={`py-2 px-4 hover:shadow ${
+                  darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+                } transition duration-200`}
+              >
                 <NavLink
                   to="/populars"
                   className={({ isActive }) =>
@@ -276,7 +269,6 @@ const NavBar = () => {
                       : "flex items-center hover:font-semibold transition duration-250"
                   }
                 >
-                  <GrStarOutline className="mr-2" />
                   Populares
                 </NavLink>
               </li>
@@ -284,6 +276,7 @@ const NavBar = () => {
           </div>
         </nav>
       </div>
+      <div class="backdrop-blur-sm bg-white/30 absolute top-full left-0"></div>
     </>
   );
 };
